@@ -1,0 +1,8 @@
+.form__input {
+  max-width: 358px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #000;
+  opacity: .2;
+  padding-bottom: 13px;
+}
