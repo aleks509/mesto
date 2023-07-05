@@ -1,0 +1,23 @@
+.header {
+  max-width: 880px;
+  margin: 45px auto 0;
+}
+
+.header::after {
+  display: block;
+  content: " ";
+  outline: 1px solid #545454;
+  opacity: 0.699999988079071;
+  height: 0px;
+  max-width: 880px;
+  width: 100%;
+  margin-top: 41px;
+}
+
+
+@media screen and (max-width: 968px) {
+  .header {
+    margin-top: 28px;
+    margin-left: 27px;
+  }
+}
