@@ -3,4 +3,7 @@
   flex-direction: column;
   gap: 30px;
   box-sizing: border-box;
+  border: none;
+  margin: 0;
+  padding: 0;
 }
