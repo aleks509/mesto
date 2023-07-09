@@ -23,7 +23,7 @@
     flex-direction: column;
     padding-top: 38.25px;
     padding-bottom: 36px;
-    max-width: 420px
+    max-width: 420px;
   }
 }
 
@@ -32,6 +32,6 @@
     flex-direction: column;
     padding-top: 28.25px;
     padding-bottom: 34px;
-    max-width: 320px
+    max-width: 320px;
   }
 }
