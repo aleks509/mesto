@@ -12,3 +12,11 @@
   overflow: hidden;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 768px) {
+  .element__inner {
+    padding-top: 21px;
+    padding-bottom: 28px;
+  }
+
+}

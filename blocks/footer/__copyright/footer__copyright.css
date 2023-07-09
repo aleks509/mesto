@@ -1,9 +1,15 @@
 .footer__copyright {
-  margin: 67px 0 60px;
+  margin: 61px 0 60px;
   color: #545454;
   font-size: 18px;
-  font-family: Inter;
   font-weight: 400;
-  line-height: normal;
+  line-height: 21.78px;
+}
 
+@media screen and (max-width: 768px) {
+.footer__copyright {
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 50px;
+  }
 }
