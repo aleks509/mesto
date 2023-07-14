@@ -7,8 +7,17 @@
   background: rgba(0, 0, 0, .5);
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-top: 189px;
+  align-items: flex-start;
   opacity: 0;
   visibility: hidden;
+  box-sizing: border-box;
+}
 
+
+@media screen and (max-width: 576px) {
+  .popup {
+    padding-top: 120px;
+
+  }
 }

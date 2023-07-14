@@ -1,11 +1,11 @@
-const editButton = document.querySelector('.profile-info__edit-button');
+const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_about');
 const buttonClosePopupProfile = popupProfile.querySelector('.popup__button-close');
-const formElement = document.querySelector('.popup__container');
+const formElement = document.querySelector('.form');
 const nameInput = popupProfile.querySelector('.form__input_type_name');
 const jobInput = popupProfile.querySelector('.form__input_type_about');
-const profileTitle = document.querySelector('.profile-info__title');
-const profileSubtitle = document.querySelector('.profile-info__subtitle');
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
 
 
 
@@ -29,3 +29,4 @@ function handleFormSubmit (evt) {
 editButton.addEventListener('click', addPopup);
 buttonClosePopupProfile.addEventListener('click', closePopup);
 formElement.addEventListener('submit', handleFormSubmit);
+

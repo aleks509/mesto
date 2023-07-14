@@ -6,7 +6,7 @@
 .header::after {
   display: block;
   content: " ";
-  outline: 1px solid #545454;
+  outline: 0.5px solid #545454;
   opacity: 0.699999988079071;
   height: 0px;
   max-width: 880px;
