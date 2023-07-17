@@ -1,12 +1,12 @@
 .profile__edit-button {
   display: block;
   border: none;
-  width: 24px;
-  height: 24px;
   background: url(./../../../images/editbutton.svg);
   background-repeat: no-repeat;
   background-position: center;
-  /* background-size: 24px 24px; все перепробовала, не получается через это свойство */
+  max-width: 24px;
+  width: 100%;
+  height: 24px;
   align-self: center;
   cursor: pointer;
   outline: 1px solid white;
@@ -22,9 +22,9 @@
 
 @media screen and (max-width: 768px) {
   .profile__edit-button {
+    margin: 25px 0 0;
     width: 18px;
     height: 18px;
-    margin: 20px 0 0 13px;
-
+    background-size: 7.5px;
   }
 }

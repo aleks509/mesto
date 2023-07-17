@@ -1,3 +1,10 @@
 .profile__profile-info {
   padding-left: 3.75px;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__profile-info {
+    padding-left: 0;
+  }
+
+}

@@ -1,16 +1,17 @@
 .profile__add-button {
   background-color: transparent;
-  width: 150px;
+  max-width: 150px;
+  width: 100%;
   height: 50px;
   justify-content: flex-end;
   background-image: url('../../../images/Vector.svg');
   background-repeat: no-repeat;
   background-position: center;
-  /* background-size: 150px 50px; */
   cursor: pointer;
   outline: 2px solid white;
   border-radius: 2px;
   border: none;
+  padding: 0;
 }
 
 .profile__add-button:hover {
@@ -22,5 +23,6 @@
   .profile__add-button {
     min-width: 282px;
     width: 100%;
+    background-size: 16px;
     }
   }

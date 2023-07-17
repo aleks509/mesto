@@ -1,13 +1,12 @@
 .popup {
   position: fixed;
   left: 0;
-  top: 0;
+  top: 188px;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, .5);
   display: flex;
   justify-content: center;
-  padding-top: 189px;
   align-items: flex-start;
   opacity: 0;
   visibility: hidden;
@@ -17,7 +16,7 @@
 
 @media screen and (max-width: 576px) {
   .popup {
-    padding-top: 120px;
+    top: 120px;
 
   }
 }

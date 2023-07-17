@@ -12,7 +12,7 @@
   cursor: pointer;
   padding: 0;
   outline: none;
-  margin-top: 41px;
+  margin-top: 45px;
   box-sizing: border-box;
 }
 
@@ -27,8 +27,6 @@ transition: opacity 0.1s ease;
   max-width: 238px;
   height: 46px;
   font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
   line-height: 16.94px;
   }
 }
