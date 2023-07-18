@@ -1,16 +1,16 @@
 .footer__copyright {
-  margin: 66px 0 60px;
   color: #545454;
   font-size: 18px;
   font-weight: 400;
   line-height: 21.78px;
+  flex-shrink: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 768px) {
 .footer__copyright {
   font-size: 14px;
   line-height: 17px;
-  margin-top: 48px;
-  margin-bottom: 36px;
+
   }
 }

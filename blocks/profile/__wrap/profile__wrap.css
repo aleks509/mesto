@@ -1,14 +1,15 @@
 .profile__wrap {
   display: flex;
   gap: 18px;
-  max-width: 336px;
-  width: 100%;
+
 }
 
 @media screen and (max-width: 768px) {
   .profile__wrap {
-    gap: 20px;
-  }
-
-
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: inherit;
+    text-align: center;
+}
 }
