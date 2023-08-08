@@ -55,6 +55,13 @@ const cardElement = cardTemplate.querySelector('.element');
 const deleteBtn = cardTemplate.querySelector('.element__trash');
 
 // Создание нового Элемента
+// находим элементы открытия попапа viewPhoto
+const viewContainer = document.querySelector('.popup_type_view-photo')
+const viewPhotoTemplate = document.querySelector('.view-template').content;
+const viewPopup = viewPhotoTemplate.querySelector('.popup__view-container').cloneNode(true);
+const viewPhoto = viewPopup.querySelector('.popup__photo');
+const viewTitle = viewPopup.querySelector('.popup__photo-title');
+const viewClose = viewPopup.querySelector('.popup__view-close');
 
 const  createCard = (nameValue, linkValue)  => {
   const cardTemplate = document.querySelector('.element-template').content;
@@ -77,15 +84,8 @@ const  createCard = (nameValue, linkValue)  => {
     evt.target.classList.toggle('element__like_active')
   });
 
-  // переменые для открытия картинки  viewPhoto
-const viewContainer = document.querySelector('.popup_type_view-photo')
-const viewPhotoTemplate = document.querySelector('.view-template').content;
-const viewPopup = viewPhotoTemplate.querySelector('.popup__view-container').cloneNode(true);
-const viewPhoto = viewPopup.querySelector('.popup__photo');
-const viewTitle = viewPopup.querySelector('.popup__photo-title');
-const viewClose = viewPopup.querySelector('.popup__view-close');
 
-// функция открытия
+// функция открытия попапа viewPhoto,
 function openView() {
   openPopup(viewContainer);
   viewPhoto.src = cardImg.src;
@@ -96,37 +96,36 @@ function openView() {
 // открываем фото
 cardImg.addEventListener('click', openView)
 
+  return cardElement;
+}
+// закрытие попапа viewPhoto
 function closeView(event) {
   closePopup(viewContainer);
   const itemPhoto = viewClose.closest('.popup__view-container');
   itemPhoto.remove()
-
 }
+
 viewClose.addEventListener('click', closeView)
-
-  return cardElement;
-}
-
-
-
+// ф рендеринга нового элемента
 const renderCard = (nameValue, linkValue) => {
   const newCard = createCard(nameValue, linkValue);
   containerElements.prepend(newCard);
  };
-
+// применяем метод forEach к массиву initialCards
 initialCards.forEach((item) => {
  renderCard(item.name, item.link)
 });
 
+// находим поля формы ввода
+const nameInputPlace = formNewElement.querySelector('.form__input_type_place');
+const linkInputLink = formNewElement.querySelector('.form__input_type_link');
 
 function handleAddCards (evt) {
   evt.preventDefault();
 
-  const name = formNewElement.querySelector('.form__input_type_place');
-  const link = formNewElement.querySelector('.form__input_type_link');
 
 
-  renderCard(name.value, link.value);
+  renderCard(nameInputPlace.value, linkInputLink.value);
   closePopup(popupNewElement)
   formNewElement.reset()
 }
