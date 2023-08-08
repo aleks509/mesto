@@ -99,7 +99,7 @@ cardImg.addEventListener('click', openView)
 function closeView(event) {
   closePopup(viewContainer);
   const itemPhoto = viewClose.closest('.popup__view-container');
-  itemPhoto.remove();
+  itemPhoto.remove()
 
 }
 viewClose.addEventListener('click', closeView)
