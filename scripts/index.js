@@ -80,36 +80,30 @@ const  createCard = (nameValue, linkValue)  => {
   // переменые для открытия картинки  viewPhoto
 const viewContainer = document.querySelector('.popup_type_view-photo')
 const viewPhotoTemplate = document.querySelector('.view-template').content;
-const viewPopup = viewPhotoTemplate.querySelector('.view-container').cloneNode(true);
+const viewPopup = viewPhotoTemplate.querySelector('.popup__view-container').cloneNode(true);
 const viewPhoto = viewPopup.querySelector('.popup__photo');
 const viewTitle = viewPopup.querySelector('.popup__photo-title');
-const viewClose = viewContainer.querySelector('.popup__view-close');
+const viewClose = viewPopup.querySelector('.popup__view-close');
 
-
-
-// F открытия попап viewPhoto
-function openViewPhoto() {
+// функция открытия
+function openView() {
   openPopup(viewContainer);
   viewPhoto.src = cardImg.src;
   viewTitle.textContent = cardTitle.textContent;
+  console.log(viewTitle.textContent)
   viewContainer.append(viewPopup);
 }
+// открываем фото
+cardImg.addEventListener('click', openView)
 
-// слушатель на открытия фото
-cardImg.addEventListener('click', () => {
-  openViewPhoto()
-});
-
-// F закрытия попапа viewPhoto
-function closeViewPhoto() {
+function closeView(event) {
   closePopup(viewContainer);
-  viewPopup.remove();
-}
-// слушаетельна кнопку закрытия
-viewClose.addEventListener('click', ()  => {
-  closeViewPhoto()
+  const itemPhoto = viewClose.closest('.popup__view-container');
+  itemPhoto.remove();
 
-});
+}
+viewClose.addEventListener('click', closeView)
+
   return cardElement;
 }
 

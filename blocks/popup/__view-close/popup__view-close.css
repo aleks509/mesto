@@ -3,13 +3,26 @@
   background-repeat: no-repeat;
   outline: none;
   cursor: pointer;
+
   width: 32px;
   height: 32px;
-  position: absolute;
-  top: 50px;
-  right: 260px;
+  align-self: flex-end;
   border: none;
   padding: 0;
   background-color: transparent;
-
+  position: absolute;
+  top: -48px;
+  right: -39px;
 }
+.popup__view-close :hover {
+  opacity: 0.6000000238418579;
+  transition: opacity 0.1s ease;
+  }
+
+  @media screen and (max-width: 576px) {
+    .popup__view-close {
+      background-size: 20px 20px;
+      top: -38px;
+      right: -11px;
+    }
+  }
