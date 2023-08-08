@@ -12,3 +12,12 @@
   color: #000;
   margin: 0;
 }
+
+.form__input:focus {
+  outline: 2px solid skyblue;
+}
+
+.input::-webkit-input-placeholder {color:#c4c4c4;;}
+.input::-moz-placeholder          {color:#c4c4c4;}
+.input::-ms-input-placeholder     {color:#c4c4c4;}
+.input::placeholder               {color:#c4c4c4;}

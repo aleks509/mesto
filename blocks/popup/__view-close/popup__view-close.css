@@ -1,0 +1,15 @@
+.popup__view-close {
+  background-image: url(../../../images/close.svg);
+  background-repeat: no-repeat;
+  outline: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 50px;
+  right: 260px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+
+}

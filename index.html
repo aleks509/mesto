@@ -28,55 +28,62 @@
       </div>
         <button type="button" class="profile__add-button" aria-label="Добавить"></button>
       </section>
-      <section class="elements" aria-label="Фотографии пользователся">
-        <article class="element">
+      <section class="elements" aria-label="Фотографии пользователя">
+        <!-- <article class="element">
+          <button class="element__trash" type="button" aria-label="Корзина"></button>
           <img src="./images/Karachayevsk.png" alt="Здание старой церкви" class="element__image">
           <div class="element__inner">
             <h2 class="element__title">Карачаевск</h2>
-            <button class="element__like element__like_active" type="button" aria-label="Нравится"></button>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
-        </article>
-        <article class="element">
+        </article> -->
+        <!-- <article class="element">
+          <button class="element__trash" type="button" aria-label="Корзина"></button>
           <img src="./images/Elbrus.png" alt="вид на гору Эльбрус" class="element__image">
           <div class="element__inner">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like element__like_active" type="button" aria-label="Нравится"></button>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
-        </article>
-        <article class="element">
+        </article> -->
+        <!-- <article class="element">
+          <button class="element__trash" type="button" aria-label="Корзина"></button>
           <img src="./images/Dombay.png" alt="вид на снежные пики гор" class="element__image">
           <div class="element__inner">
             <h2 class="element__title">Домбай</h2>
-            <button class="element__like element__like_active" type="button" aria-label="Нравится"></button>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
-        </article>
-        <article class="element">
+        </article> -->
+        <!-- <article class="element">
+          <button class="element__trash" type="button" aria-label="Корзина"></button>
           <img src="./images/Elbrus.png" alt="вид на гору Эльбрус" class="element__image">
           <div class="element__inner">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like element__like_active" type="button" aria-label="Нравится"></button>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
-        </article>
-        <article class="element">
+        </article> -->
+        <!-- <article class="element">
+          <button class="element__trash" type="button" aria-label="Корзина"></button>
           <img class="element__image" src="./images/Dombay.png" alt="вид на снежные пики гор">
           <div class="element__inner">
             <h2 class="element__title">Домбай</h2>
-            <button class="element__like element__like_active" type="button" aria-label="Нравится"></button>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
-        </article>
-        <article class="element">
+        </article> -->
+        <!-- <article class="element">
+          <button class="element__trash" type="button" aria-label="Корзина"></button>
           <img src="./images/Karachayevsk.png" alt="Здание старой церкви" class="element__image">
           <div class="element__inner">
             <h2 class="element__title">Карачаево-Черкесия</h2>
-            <button class="element__like element__like_active" type="button" aria-label="Нравится"></button>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
-        </article>
+        </article> -->
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy;2023 Mesto Russia</p>
     </footer>
   </div>
+  <!-- popup edit profile -->
   <div class="popup popup_type_about">
     <div class="popup__container" >
       <button type="button" class="popup__button-close" aria-label="Закрыть"></button>
@@ -90,11 +97,12 @@
       </form>
     </div>
   </div>
-  <div class="popup popup_type_new-item">
+  <!-- popup add new element -->
+  <div class="popup popup_type_new-element">
     <div class="popup__container" >
       <button type="button" class="popup__button-close" aria-label="Закрыть"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="form" name="form-about">
+      <form class="form form-new-element" name="form-new-element">
         <fieldset class="form__fieldset">
         <input name="place" class="form__input form__input_type_place" type="text" placeholder="Название">
         <input name="link" class="form__input form__input_type_link" type="url" placeholder="Ссылка на картинку">
@@ -103,6 +111,30 @@
       </form>
     </div>
   </div>
+  <!-- popup view photo -->
+  <div class="popup popup_type_view-photo">
+    <div class="popup__view-container"></div>
+      <button type="button" class="popup__view-close" aria-label="Закрыть"></button>
+      <img src=" " class="popup__photo" alt=" ">
+      <h3 class="popup__photo-title"> </h3>
+  </div>
+  <!-- template -->
+  <template class="element-template">
+    <article class="element">
+    <button class="element__trash" type="button" aria-label="Корзина"></button>
+    <img src="" alt="" class="element__image">
+    <div class="element__inner">
+      <h2 class="element__title"></h2>
+      <button class="element__like" type="button" aria-label="Нравится"></button>
+    </div>
+  </article>
+  </template>
+  <template class="view-template">
+    <div class="view-container">
+      <img src=" " class="popup__photo"  alt="">
+      <h3 class="popup__photo-title"></h3>
+    </div>
+  </template>
   <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
