@@ -56,53 +56,51 @@ const deleteBtn = cardTemplate.querySelector('.element__trash');
 
 // Создание нового Элемента
 // находим элементы открытия попапа viewPhoto
-const viewContainer = document.querySelector('.popup_type_view-photo')
-const viewPhotoTemplate = document.querySelector('.view-template').content;
-const viewPopup = viewPhotoTemplate.querySelector('.popup__view-container').cloneNode(true);
+const viewContainer = document.querySelector('.popup_type_view-photo');
+// const viewPhotoTemplate = document.querySelector('.view-template');
+const viewPopup = viewContainer.querySelector('.popup__view-container');
 const viewPhoto = viewPopup.querySelector('.popup__photo');
 const viewTitle = viewPopup.querySelector('.popup__photo-title');
 const viewClose = viewPopup.querySelector('.popup__view-close');
 
+// создаем новую карточку и внутри этой Ф слушатели на корзину, лайк и просмотр фотки
 const  createCard = (nameValue, linkValue)  => {
   const cardTemplate = document.querySelector('.element-template').content;
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const cardImg = cardElement.querySelector('.element__image');
   cardImg.src = linkValue;
-
-
   // cardImg.alt = `${cardTitle.textContent}`;
-
   const cardTitle =  cardElement.querySelector('.element__title');
   cardTitle.textContent = nameValue;
 
-
+// слушатель на корзину и удаление
   cardElement.querySelector('.element__trash').addEventListener('click', () => {
     cardElement.remove()
   });
-
+// слушатель на лайк и добавляем класс лайку active
   cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active')
   });
-
+// слушаетель на img и вызов ф открытия попапа viewPhoto с данными из массива
+cardImg.addEventListener('click', () => {
+  openView(linkValue, nameValue)
+})
 
 // функция открытия попапа viewPhoto,
-function openView() {
+function openView(img, title) {
+  viewPhoto.src = img;
+  console.log(cardImg.src);
+  console.log(cardTitle.textContent);
+  viewTitle.textContent = title;
   openPopup(viewContainer);
-  viewPhoto.src = cardImg.src;
-  viewTitle.textContent = cardTitle.textContent;
-  console.log(viewTitle.textContent)
-  viewContainer.append(viewPopup);
+
 }
-// открываем фото
-cardImg.addEventListener('click', openView)
 
   return cardElement;
 }
 // закрытие попапа viewPhoto
 function closeView(event) {
   closePopup(viewContainer);
-  const itemPhoto = viewClose.closest('.popup__view-container');
-  itemPhoto.remove()
 }
 
 viewClose.addEventListener('click', closeView)
