@@ -1,7 +1,7 @@
 const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_about');
 const buttonClosePopupProfile = popupProfile.querySelector('.popup__button-close');
-const formElement = document.querySelector('.form');
+const form = document.querySelector('.form');
 const nameInput = popupProfile.querySelector('.form__input_type_name');
 const jobInput = popupProfile.querySelector('.form__input_type_about');
 const profileTitle = document.querySelector('.profile__title');
@@ -36,7 +36,7 @@ function handleFormSubmit (evt) {
 buttonClosePopupProfile.addEventListener('click', () =>
 {closePopup(popupProfile)});
 
-formElement.addEventListener('submit', handleFormSubmit);
+form.addEventListener('submit', handleFormSubmit);
 
 // переменые для Ф открыть/закрыть Новое место
 const addButton = document.querySelector('.profile__add-button');
@@ -89,8 +89,8 @@ cardImg.addEventListener('click', () => {
 // функция открытия попапа viewPhoto,
 function openView(img, title) {
   viewPhoto.src = img;
-  console.log(cardImg.src);
-  console.log(cardTitle.textContent);
+  // console.log(cardImg.src);
+  // console.log(cardTitle.textContent);
   viewTitle.textContent = title;
   openPopup(viewContainer);
 
@@ -120,15 +120,78 @@ const linkInputLink = formNewElement.querySelector('.form__input_type_link');
 
 function handleAddCards (evt) {
   evt.preventDefault();
-
-
-
   renderCard(nameInputPlace.value, linkInputLink.value);
   closePopup(popupNewElement)
   formNewElement.reset()
 }
-
-
 formNewElement.addEventListener('submit', handleAddCards);
 
+// В А Л И Д А Ц И Я
+// Ф отображения сообщения об ошибке validationMessage и добоваление соотв класса
+function showError(inputElement, errorElement, config) {
+  errorElement.textContent = inputElement.validationMessage;
+  inputElement.classList.add(config.inputErrorClass);
+}
+// Ф скрытия сообщения об ошибке validationMessage и добоваление соотв класса
+function hideError(inputElement, errorElement, config) {
+  inputElement.classList.remove(config.inputErrorClass);
+  errorElement.textContent = inputElement.validationMessage;
+}
+// При наступлении события ввода в инпут проверяем его валидность и вызываем функции закрытия/отображения ошибки
+function checkInputValidity(inputElement, formElement, config) {
+  const isInputValid = inputElement.validity.valid;
+  const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
+  if (isInputValid) {
+    hideError(inputElement, errorElement, config)
+  } else {
+    showError(inputElement, errorElement, config)
+  }
+}
+// Переключатель кнопки Сохранить и добавление соотв класса
+function toggleButtonState(buttonElement, isActive, config) {
+if (isActive) {
+  buttonElement.disabled = false;
+  buttonElement.classList.remove(config.finactiveButtonClass);
+} else {
+  buttonElement.disabled = 'disabled';
+  buttonElement.classList.add(config.finactiveButtonClass);
+}
+}
+// Вешаем обработчик события submit на каждую форму в переборе
+// Внутри каждой формы ищем инпуты
+// Перебираем список инпутов конкретной формы и вашеам на кадый инпутт обработчик события input
+
+function setEventListener(formElement, config) {
+  const inputList = formElement.querySelectorAll(config.inputSelector);
+  const submitButtonElement = formElement.querySelector(config.submitButtonSelector);
+  toggleButtonState(submitButtonElement, formElement.checkValidity(), config);
+  [...inputList].forEach(function(inputElement) {
+    inputElement.addEventListener('input', function(){
+      toggleButtonState(submitButtonElement, formElement.checkValidity(), config);
+      checkInputValidity(inputElement, formElement,config)
+    })
+
+    })
+  formElement.addEventListener('submit', function(evt){
+    evt.preventDefault();
+  })
+}
+// 1. Находим все формы и перебираем их
+// параметры, сюда передаем Аргументы формы-объекта
+function enableValidation(config) {
+  const formList = document.querySelectorAll(config.formSelector);
+  [...formList].forEach(function(formElement){
+    setEventListener(formElement, config)
+    })
+};
+// Аргументы формы объект
+const configForm = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__button-save",
+  finactiveButtonClass: "form__button-save_disabled",
+  inputErrorClass: "form__input_type_error"
+}
+
+enableValidation(configForm);
 

@@ -42,7 +42,7 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
-/*Popup*/
+/*Popup/form*/
 
 
 @import url(../blocks/popup/popup.css);
@@ -58,8 +58,9 @@
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__fieldset/form__fieldset.css);
 @import url(../blocks/form/__input/form__input.css);
+@import url(../blocks/form/__input/_type/form__input_type_error.css);
 @import url(../blocks/form/__input/_type/form__input_type_name.css);
 @import url(../blocks/form/__input/_type/form__input_type_about.css);
-
+@import url(../blocks/form/__error/form__error.css);
 @import url(../blocks/form/__button-save/form__button-save.css);
-
+@import url(../blocks/form/__button-save/_disabled/form__button-save_disabled.css);

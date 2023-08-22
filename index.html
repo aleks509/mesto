@@ -88,10 +88,14 @@
     <div class="popup__container" >
       <button type="button" class="popup__button-close" aria-label="Закрыть"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="form" name="form-about">
-        <fieldset class="form__fieldset">
-        <input name="name" class="form__input form__input_type_name" type="text">
-        <input name="about" class="form__input form__input_type_about" type="text">
+      <form class="form" name="form-about" novalidate>
+      <fieldset class="form__fieldset">
+        <input name="name" class="form__input form__input_type_name" type="text"
+        placeholder="Имя" required minlength="2" maxlength="40">
+        <span id="name-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
+        <input name="about" class="form__input form__input_type_about" type="text" placeholder="О себе"
+        required minlength="2" maxlength="200">
+        <span id="about-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
       </fieldset>
         <button type="submit" class="form__button-save">Сохранить</button>
       </form>
@@ -102,10 +106,14 @@
     <div class="popup__container" >
       <button type="button" class="popup__button-close" aria-label="Закрыть"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="form form-new-element" name="form-new-element">
-        <fieldset class="form__fieldset">
-        <input name="place" class="form__input form__input_type_place" type="text" placeholder="Название">
-        <input name="link" class="form__input form__input_type_link" type="url" placeholder="Ссылка на картинку">
+      <form class="form form-new-element" name="form-new-element" novalidate>
+      <fieldset class="form__fieldset">
+        <input name="place" class="form__input form__input_type_place" type="text"
+        placeholder="Название" required minlength="2" maxlength="30">
+        <span id="place-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
+        <input name="link" class="form__input form__input_type_link" type="url"
+        placeholder="Ссылка на картинку" required>
+        <span id="link-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
       </fieldset>
         <button type="submit" class="form__button-save">Создать</button>
       </form>
@@ -130,13 +138,6 @@
     </div>
   </article>
   </template>
-  <!-- <template class="view-template"> -->
-    <!-- <div class="popup__view-container">
-      <button type="button" class="popup__view-close" aria-label="Закрыть"></button>
-      <img src="./images/Elbrus.png" class="popup__photo" alt=" ">
-      <h3 class="popup__photo-title"> </h3>
-    </div> -->
-  <!-- </template> -->
   <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
