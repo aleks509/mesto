@@ -7,9 +7,19 @@ const jobInput = popupProfile.querySelector('.form__input_type_about');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
+
+
+
 // // универсальная Ф открытия попапов
 function openPopup(popup) {
   popup.classList.add('popup_opened')
+  // закрытие попапов по Esc
+  document.addEventListener('keydown', function(evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popup)
+  }
+
+  });
 }
 // // универсальная Ф закрытия попапов
 function closePopup(popup) {
@@ -30,11 +40,11 @@ function handleFormSubmit (evt) {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
-
   closePopup(popupProfile)
 }
 buttonClosePopupProfile.addEventListener('click', () =>
 {closePopup(popupProfile)});
+popupProfile.addEventListener('click', (evt) => {closeOnOverlay(evt, popupProfile)});
 
 form.addEventListener('submit', handleFormSubmit);
 
@@ -45,6 +55,15 @@ const closeBtnNewElement = popupNewElement.querySelector('.popup__button-close')
 
 addButton.addEventListener('click', () => {openPopup(popupNewElement)});
 closeBtnNewElement.addEventListener('click', () => {closePopup(popupNewElement)});
+// ФУНКЦИЯ ЗАКРЫТИЯ ПО ОВЕРЛЕЮ
+function closeOnOverlay(evt, openedPopup) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(openedPopup)
+}
+};
+
+
+popupNewElement.addEventListener('click', (evt) => {closeOnOverlay(evt, popupNewElement)});
 
 // Добавляем попап Новое место
 const formNewElement = document.querySelector('.form-new-element');
@@ -69,7 +88,6 @@ const  createCard = (nameValue, linkValue)  => {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const cardImg = cardElement.querySelector('.element__image');
   cardImg.src = linkValue;
-  // cardImg.alt = `${cardTitle.textContent}`;
   const cardTitle =  cardElement.querySelector('.element__title');
   cardTitle.textContent = nameValue;
 
@@ -89,11 +107,9 @@ cardImg.addEventListener('click', () => {
 // функция открытия попапа viewPhoto,
 function openView(img, title) {
   viewPhoto.src = img;
-  // console.log(cardImg.src);
-  // console.log(cardTitle.textContent);
   viewTitle.textContent = title;
   openPopup(viewContainer);
-
+  viewContainer.addEventListener('click', (evt) => {closeOnOverlay(evt, viewContainer)});
 }
 
   return cardElement;
