@@ -4,13 +4,14 @@
   outline: none;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
-  padding: 0 0 13px;
+  padding: 5px 6px 13px;
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
   text-align: left;
   color: #000;
   margin: 0;
+  height: 30px;
 }
 
 .form__input:focus {

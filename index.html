@@ -92,10 +92,10 @@
       <fieldset class="form__fieldset">
         <input name="name" class="form__input form__input_type_name" type="text"
         placeholder="Имя" required minlength="2" maxlength="40">
-        <span id="name-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
+        <span id="name-error" class="form__error"></span> <!--  связываем спан(где сообщение об ошибке) с инпутом посредством id -->
         <input name="about" class="form__input form__input_type_about" type="text" placeholder="О себе"
         required minlength="2" maxlength="200">
-        <span id="about-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
+        <span id="about-error" class="form__error"></span> <!--  связываем спан(где сообщение об ошибке) с инпутом посредством id -->
       </fieldset>
         <button type="submit" class="form__button-save">Сохранить</button>
       </form>
@@ -140,5 +140,6 @@
   </template>
   <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
