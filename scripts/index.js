@@ -121,8 +121,7 @@ const  createCard = (nameValue, linkValue)  => {
 cardImg.addEventListener('click', () => {
   openView(linkValue, nameValue)
 })
-// обработчик клика по overlay (добавляем глобально, что он не уставалвивался каждый раз при открыии фо)
-viewContainer.addEventListener('click', (evt) => {closeOnOverlay(evt, viewContainer)});
+
 
 // функция открытия попапа viewPhoto,
 function openView(img, title) {
@@ -134,6 +133,8 @@ function openView(img, title) {
 
   return cardElement;
 }
+// обработчик клика по overlay (добавляем глобально, что он не уставалвивался каждый раз при открыии фо)
+viewContainer.addEventListener('click', (evt) => {closeOnOverlay(evt, viewContainer)});
 // закрытие попапа viewPhoto
 function closeView(event) {
   closePopup(viewContainer);
