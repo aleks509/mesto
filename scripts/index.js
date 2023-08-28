@@ -2,7 +2,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_about');
 const buttonClosePopupProfile = popupProfile.querySelector('.popup__button-close');
 const formProfile = popupProfile.querySelector('.form');
-// const inputsProfile = popupProfile.querySelectorAll('.form__input')
+const formErrorProfile = popupProfile.querySelectorAll('.form__error')
 const nameInput = popupProfile.querySelector('.form__input_type_name');
 const jobInput = popupProfile.querySelector('.form__input_type_about');
 const profileTitle = document.querySelector('.profile__title');
@@ -30,18 +30,17 @@ function addProfile() {
   jobInput.value = profileSubtitle.textContent;
 
   resetInputErrors(popupProfile, configForm)
+
 }
 
 function resetInputErrors(formElement, config) {
   const formInputList = Array.from(formElement.querySelectorAll(config.inputSelector));
-  const errorProfile = Array.from(formElement.querySelectorAll('.form__error'));
   formInputList.forEach(inputElement => {
-    inputElement.classList.remove(config.inputErrorClass)
-  });
-  errorProfile.forEach(errorElement => {
-    errorElement.textContent = ''
-  });
-}
+    checkInputValidity(inputElement, formElement, config)
+  })
+};
+
+
 
 
 editButton.addEventListener('click', addProfile);
@@ -54,8 +53,9 @@ function handleProfileSubmit (evt) {
   closePopup(popupProfile)
 }
 
-buttonClosePopupProfile.addEventListener('click', () =>
-{closePopup(popupProfile)});
+buttonClosePopupProfile.addEventListener('click', () => {
+  closePopup(popupProfile)
+});
 popupProfile.addEventListener('click', (evt) => {closeOnOverlay(evt, popupProfile)});
 
 formProfile.addEventListener('submit', handleProfileSubmit);
@@ -120,8 +120,9 @@ const  createCard = (nameValue, linkValue)  => {
 // слушаетель на img и вызов ф открытия попапа viewPhoto с данными из массива
 cardImg.addEventListener('click', () => {
   openView(linkValue, nameValue)
-  viewContainer.addEventListener('click', (evt) => {closeOnOverlay(evt, viewContainer)});
 })
+// обработчик клика по overlay (добавляем глобально, что он не уставалвивался каждый раз при открыии фо)
+viewContainer.addEventListener('click', (evt) => {closeOnOverlay(evt, viewContainer)});
 
 // функция открытия попапа viewPhoto,
 function openView(img, title) {

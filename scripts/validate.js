@@ -10,7 +10,7 @@ function hideError(inputElement, errorElement, config) {
 }
 // При наступлении события ввода в инпут проверяем его валидность и вызываем функции закрытия/отображения ошибки
 function checkInputValidity(inputElement, formElement, config) {
-  inputElement.setCustomValidity("");
+
   const isInputValid = inputElement.validity.valid;
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
   if (isInputValid) {
