@@ -1,7 +1,8 @@
 import Card  from './Сard.js';
-import FormValidator from './FormNewValidator.js';
+// import { initialCards, formProfileValidtion, formNewElementValidation } from './constants.js';
+import { FormValidator } from './FormNewValidator.js';
 
-// массив с карточками
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -29,26 +30,28 @@ const initialCards = [
   }
 ];
 
-// Аргументы формы объект
 const configForm = {
   formSelector: ".form",
   inputSelector: ".form__input",
   submitButtonSelector: ".form__button-save",
   inactiveButtonClass: "form__button-save_disabled",
   inputErrorClass: "form__input_type_error"
-}
+};
+
+
+
+
 
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_about');
 const buttonClosePopupProfile = popupProfile.querySelector('.popup__button-close');
-const formProfile = popupProfile.querySelector('.form-profile');
-const formErrorProfile = popupProfile.querySelectorAll('.form__error')
+const formProfile = popupProfile.querySelector('.form');
+// const formErrorProfile = popupProfile.querySelectorAll('.form__error')
 const nameInput = popupProfile.querySelector('.form__input_type_name');
 const jobInput = popupProfile.querySelector('.form__input_type_about');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-
 
 
 
@@ -70,16 +73,16 @@ function addProfile() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
 
-  // resetInputErrors(popupProfile, configForm)
+  resetInputErrors(popupProfile, configForm)
 
 }
 
-// function resetInputErrors(formElement, config) {
-//   const formInputList = Array.from(formElement.querySelectorAll(config.inputSelector));
-//   formInputList.forEach(inputElement => {
-//     checkInputValidity(inputElement, formElement, config)
-//   })
-// };
+function resetInputErrors(formElement, config) {
+  const formInputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  formInputList.forEach(inputElement => {
+    checkInputValidity(inputElement, formElement, config)
+  })
+};
 
 
 
@@ -142,29 +145,29 @@ const viewTitle = viewPopup.querySelector('.popup__photo-title');
 const viewClose = viewPopup.querySelector('.popup__view-close');
 
 // создаем новую карточку и внутри этой Ф слушатели на корзину, лайк и просмотр фотки
-// const  createCard = (nameValue, linkValue)  => {
-//   const cardTemplate = document.querySelector('.element-template').content;
-//   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-//   const cardImg = cardElement.querySelector('.element__image');
-//   cardImg.src = linkValue;
-//   const cardTitle =  cardElement.querySelector('.element__title');
-//   cardTitle.textContent = nameValue;
+const  createCard = (nameValue, linkValue)  => {
+  const cardTemplate = document.querySelector('.element-template').content;
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  const cardImg = cardElement.querySelector('.element__image');
+  cardImg.src = linkValue;
+  const cardTitle =  cardElement.querySelector('.element__title');
+  cardTitle.textContent = nameValue;
 
 // // слушатель на корзину и удаление
-//   cardElement.querySelector('.element__trash').addEventListener('click', () => {
-//     cardElement.remove()
-//   });
+  cardElement.querySelector('.element__trash').addEventListener('click', () => {
+    cardElement.remove()
+  });
 // // слушатель на лайк и добавляем класс лайку active
-//   cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
-//     evt.target.classList.toggle('element__like_active')
-//   });
+  cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active')
+  });
 // // слушаетель на img и вызов ф открытия попапа viewPhoto с данными из массива
-// cardImg.addEventListener('click', () => {
-//   openView(linkValue, nameValue)
-// })
+cardImg.addEventListener('click', () => {
+  openView(linkValue, nameValue)
+})
 
-//   return cardElement;
-// }
+  return cardElement;
+}
 
 // функция открытия попапа viewPhoto,
 function openView(img, title) {
@@ -212,11 +215,13 @@ function handleAddCards (evt) {
 formNewElement.addEventListener('submit', handleAddCards);
 
 
+
+
 // Создать экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 // formProfile
 // formNewElement
-const formProfileValidtion = new FormValidator (configForm, formProfile);
+const formProfileValidtion = new FormValidator(configForm, formProfile);
 formProfileValidtion.enableValidation();
 
-const formNewElementValidation = new FormValidator (configForm, formNewElement);
+const formNewElementValidation = new FormValidator(configForm, formNewElement);
 formNewElementValidation.enableValidation();

@@ -1,24 +1,15 @@
-// первый параметр объект настроек с селекторами и классами формы
-// элемент формы те попап в котором находится форма
-
-export default class FormValidator {
+class FormValidator {
   constructor(configForm, formElement) {
     this._formSelector = configForm.formSelector;
     this._inputSelector = configForm.inputSelector;
     this._submitButtonSelector = configForm.submitButtonSelector;
     this._inactiveButtonClass = configForm.inactiveButtonClass;
     this._inputErrorClass = configForm.inputErrorClass;
-
     this._formElement = formElement;
-
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._submitButton = this._formElement.querySelector(configForm.submitButtonSelector);
-
+    this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
 }
-// formSelector - формы
-// formElement - 'это контретный попап в котором форма'
 
-//  приватные методы: проверка валидности поля, toggle submit, обработчики событий
  _showError(inputElement) {
   const errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
   errorElement.textContent = inputElement.validationMessage;
@@ -47,7 +38,6 @@ _toggleButtonState(isActive) {
     this._submitButton.disabled = 'disabled';
     this._submitButton.classList.add(this._inactiveButtonClass);
   }
-
 }
 
 _setEventListener() {
@@ -60,14 +50,16 @@ _setEventListener() {
   });
   }
 
-  // включаем валидацию формы, публичный метод
 enableValidation() {
-    // this._formElement.addEventListener('submit', (evt) => {
-    //   evt.preventDefault();
       this._setEventListener();
-  // });
   }
 }
+
+export { FormValidator }
+
+
+
+
 // Создайте класс FormValidator, который настраивает валидацию полей формы:
 // принимает в конструктор объект настроек с селекторами и классами формы;
 // принимает вторым параметром элемент той формы, которая валидируется;
