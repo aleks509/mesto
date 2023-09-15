@@ -1,5 +1,3 @@
-// import { FormValidator } from './FormNewValidator.js';
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -35,8 +33,5 @@ const configForm = {
   inputErrorClass: "form__input_type_error"
 };
 
-const formProfileValidtion = new FormValidator (configForm, document.querySelector('.form-profile'));
 
-const formNewElementValidation = new FormValidator (configForm, document.querySelector('.form-new-element'));
-
-export { initialCards, formProfileValidtion, formNewElementValidation }
+export { initialCards, configForm }

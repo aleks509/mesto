@@ -1,70 +1,94 @@
-// // Ф отображения сообщения об ошибке validationMessage и добоваление соотв класса
-// function showError(inputElement, errorElement, config) {
-//   errorElement.textContent = inputElement.validationMessage;
-//   inputElement.classList.add(config.inputErrorClass);
-// }
-// // Ф скрытия сообщения об ошибке validationMessage и добоваление соотв класса
-// function hideError(inputElement, errorElement, config) {
-//   inputElement.classList.remove(config.inputErrorClass);
-//   errorElement.textContent = inputElement.validationMessage;
-// }
-// // При наступлении события ввода в инпут проверяем его валидность и вызываем функции закрытия/отображения ошибки
-// function checkInputValidity(inputElement, formElement, config) {
+class FormValidator {
+  constructor(configForm, formElement) {
+      this._inputSelector = configForm.inputSelector;
+      this._submitButtonSelector = configForm.submitButtonSelector;
+      this._inactiveButtonClass = configForm.inactiveButtonClass;
+      this._inputErrorClass = configForm.inputErrorClass;
+      this._formElement = formElement;
+      this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+      this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
+  };
 
-//   const isInputValid = inputElement.validity.valid;
-//   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
-//   if (isInputValid) {
-//     hideError(inputElement, errorElement, config)
-//   } else {
-//     showError(inputElement, errorElement, config)
-//   }
-// }
+  _showError(inputElement) {
+      const errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
+      errorElement.textContent = inputElement.validationMessage;
+      inputElement.classList.add(this._inputErrorClass);
+  };
 
-// // Переключатель кнопки Сохранить и добавление соотв класса
-// function toggleButtonState(buttonElement, isActive, config) {
-// if (isActive) {
-//   buttonElement.disabled = false;
-//   buttonElement.classList.remove(config.inactiveButtonClass);
-// } else {
-//   buttonElement.disabled = 'disabled';
-//   buttonElement.classList.add(config.inactiveButtonClass);
-// }
-// }
-// // Вешаем обработчик события submit на каждую форму в переборе
-// // Внутри каждой формы ищем инпуты
-// // Перебираем список инпутов конкретной формы и вашеам на кадый инпутт обработчик события input
+  _hideError(inputElement) {
+      const errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
+      inputElement.classList.remove(this._inputErrorClass);
+      errorElement.textContent = inputElement.validationMessage;
+  };
 
-// function setEventListener(formElement, config) {
-//   const inputList = formElement.querySelectorAll(config.inputSelector);
-//   const submitButtonElement = formElement.querySelector(config.submitButtonSelector);
-//   toggleButtonState(submitButtonElement, formElement.checkValidity(), config);
-//   [...inputList].forEach(function(inputElement) {
-//     inputElement.addEventListener('input', function(){
-//       toggleButtonState(submitButtonElement, formElement.checkValidity(), config);
-//       checkInputValidity(inputElement, formElement, config)
-//     })
+  _checkInputValidity(inputElement) {
+      const isInputValid = inputElement.validity.valid;
+      if (isInputValid) {
+        this._hideError(inputElement)
+      } else {
+        this._showError(inputElement)
+      };
+    };
 
-//     })
-//   formElement.addEventListener('submit', function(evt){
-//     evt.preventDefault();
-//   })
-// }
-// // 1. Находим все формы и перебираем их
-// // параметры, сюда передаем Аргументы формы-объекта
-// function enableValidation(config) {
-//   const formList = document.querySelectorAll(config.formSelector);
-//   [...formList].forEach(function(formElement){
-//     setEventListener(formElement, config)
-//     })
-// };
-// // Аргументы формы объект
-// const configForm = {
-//   formSelector: ".form",
-//   inputSelector: ".form__input",
-//   submitButtonSelector: ".form__button-save",
-//   inactiveButtonClass: "form__button-save_disabled",
-//   inputErrorClass: "form__input_type_error"
-// }
+  _enableSubmitButton() {
+    this._submitButton.disabled = false;
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+  };
 
-// enableValidation(configForm);
+  _disableSubmitButton() {
+    this._submitButton.disabled = true;
+    this._submitButton.classList.add(this._inactiveButtonClass);
+  };
 
+  _toggleButtonState(isActive) {
+    if (isActive) {
+      this._enableSubmitButton()
+    } else {
+      this._disableSubmitButton()
+    };
+  };
+
+  _setEventListener() {
+      this._toggleButtonState(this._formElement.checkValidity())
+      this._inputList.forEach((inputElement) => {
+        inputElement.addEventListener('input', () => {
+        this._toggleButtonState(this._formElement.checkValidity());
+        this._checkInputValidity(inputElement)
+      });
+    });
+    };
+
+  disableButton() {
+    this._toggleButtonState(this._formElement.checkValidity());
+    }
+
+  resetInputErrors() {
+      this._inputList.forEach(inputElement => {
+        this._checkInputValidity(inputElement)
+      })
+    };
+
+  enableValidation() {
+      this._setEventListener();
+    };
+}
+
+export { FormValidator }
+
+
+
+
+// Создайте класс FormValidator, который настраивает валидацию полей формы:
+// принимает в конструктор объект настроек с селекторами и классами формы;
+// принимает вторым параметром элемент той формы, которая валидируется;
+// имеет приватные методы, которые обрабатывают форму: проверяют валидность поля, изменяют состояние кнопки сабмита, устанавливают все обработчики;
+// имеет публичный метод enableValidation, который включает валидацию формы.
+// Для каждой проверяемой формы создайте экземпляр класса FormValidator.
+
+// Экземпляр класса FormValidator создаётся для каждой проверяемой формы.
+// Этот класс должен:
+// Принимать в конструктор объект настроек с классами формы???
+// Принимать в конструктор ссылку на HTML-элемент проверяемой формы;
+// Содержать приватные методы для обработки формы. В методах за объектом настроек следует
+// обращаться к полю класса, а не передавать его в каждый метод, как это было реализовано ранее;
+// Содержать публичный метод enableValidation — вызовите его после создания экземпляра класса.
