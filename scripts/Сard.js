@@ -5,6 +5,7 @@ export default class Card {
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._openHandler = openHandler;
+
   }
 // приватный метод, который заеберет разметку из HTML, клонирует
 //  и вернет DOM element
@@ -21,12 +22,14 @@ export default class Card {
 
       this._imageElement = this._element.querySelector('.element__image');
       this._buttonLike = this._element.querySelector('.element__like');
+      this._titleElement = this._element.querySelector('.element__title');
       this._setEventListeners();
-      this._element.querySelector('.element__title').textContent = this._name;
+      this._titleElement.textContent = this._name;
       this._imageElement.src = this._link;
       this._imageElement.alt = this._name;
       return this._element;
   }
+
 // приватные методы обработчика лайка и удаления
   _handleLikeClick() {
     this._buttonLike.classList.toggle('element__like_active');
@@ -45,5 +48,6 @@ export default class Card {
     this._imageElement.addEventListener('click', () => {
       this._openHandler(this._link, this._name)
     });
+
   }
 }
