@@ -58,10 +58,6 @@ class FormValidator {
     });
     };
 
-  // disableButton() {
-  //   this._toggleButtonState(this._formElement.checkValidity());
-  //   }
-
   resetInputErrors() {
       this._inputList.forEach(inputElement => {
         this._checkInputValidity(inputElement)

@@ -1,10 +1,10 @@
 export default class Card {
   // параметры коструктора - обект и селектор разметки и ссылка на функцию открытия openView(img, title)
-  constructor (data, templateSelector, openHandler) {
+  constructor (data, templateSelector, handleImageClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._openHandler = openHandler;
+    this._handleImageClick = handleImageClick;
 
   }
 // приватный метод, который заеберет разметку из HTML, клонирует
@@ -36,6 +36,7 @@ export default class Card {
   }
   _handleCardRemove() {
       this._element.remove();
+      this._element = null;
   }
 
   _setEventListeners() {
@@ -46,7 +47,7 @@ export default class Card {
       this._handleCardRemove()
     });
     this._imageElement.addEventListener('click', () => {
-      this._openHandler(this._link, this._name)
+      this._handleImageClick(this._link, this._name)
     });
 
   }

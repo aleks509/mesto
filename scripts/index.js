@@ -13,10 +13,10 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 // переменые для Ф открыть/закрыть Новое место
 const addButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('.popup_type_new-element');
-const closeBtnNewElement = popupAddCard.querySelector('.popup__button-close');
+const closeBtnAddCard = popupAddCard.querySelector('.popup__button-close');
 // Добавляем попап Новое место
-const formNewElement = document.querySelector('.form-new-element');
-const containerElements = document.querySelector('.elements');
+const formAddCard = document.querySelector('.form-new-element');
+const cardsContainer = document.querySelector('.elements');
 // Создание нового Элемента
 // находим элементы открытия попапа viewPhoto
 const viewPopup = document.querySelector('.popup_type_view-photo');
@@ -26,12 +26,12 @@ const viewPhoto = viewContainer.querySelector('.popup__photo');
 const viewTitle = viewContainer.querySelector('.popup__photo-title');
 const viewClose = viewContainer.querySelector('.popup__view-close');
 // находим поля формы ввода
-const nameInputPlace = formNewElement.querySelector('.form__input_type_place');
-const linkInputLink = formNewElement.querySelector('.form__input_type_link');
+const nameInputPlace = formAddCard.querySelector('.form__input_type_place');
+const linkInputLink = formAddCard.querySelector('.form__input_type_link');
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
 profileFormValidator.enableValidation();
-const cardFormValidator = new FormValidator(configForm, formNewElement);
+const cardFormValidator = new FormValidator(configForm, formAddCard);
 cardFormValidator.enableValidation();
 
 // Ф У Н К Ц И И
@@ -94,24 +94,23 @@ function createCard(item) {
 // цикл применения функии создания экз Класса к отрисовки каждой карточки и вставляем в контейнер
 initialCards.forEach((item) => {
   const newCard = createCard(item);
-  containerElements.append(newCard);
+  cardsContainer.append(newCard);
 });
 // группируем данные инпутов, применяем функцию создани экз Класса и вставляем вначало контейнера
-function handleNewCart() {
+function handleAddCard() {
   const inputsObj = {
     name: nameInputPlace.value,
     link: linkInputLink.value
   }
   const newCard = createCard(inputsObj)
-  containerElements.prepend(newCard);
+  cardsContainer.prepend(newCard);
 }
 // Добавляем новую карточку
-function handleAddNewCart (evt) {
+function handleAddNewCard (evt) {
   evt.preventDefault();
-  handleNewCart();
+  handleAddCard();
   closePopup(popupAddCard);
-  formNewElement.reset();
-  console.log(formNewElement)
+  formAddCard.reset();
   cardFormValidator.disableSubmitButton();
 }
 
@@ -123,10 +122,10 @@ buttonClosePopupProfile.addEventListener('click', () => {
 popupProfile.addEventListener('click', (evt) => {handleOverlayClick(evt)});
 formProfile.addEventListener('submit', handleProfileSubmit);
 addButton.addEventListener('click', () => {openPopup(popupAddCard)});
-closeBtnNewElement.addEventListener('click', () => {closePopup(popupAddCard)});
+closeBtnAddCard.addEventListener('click', () => {closePopup(popupAddCard)});
 // обработчик для закрытия попапа Новое место  по overlay
 popupAddCard.addEventListener('click', (evt) => {handleOverlayClick(evt, popupAddCard)});
 // обработчик клика по overlay (добавляем глобально, что он не уставалвивался каждый раз при открыии фо)
 viewPopup.addEventListener('click', (evt) => {handleOverlayClick(evt)});
 viewClose.addEventListener('click', closeView)
-formNewElement.addEventListener('submit', handleAddNewCart);
+formAddCard.addEventListener('submit', handleAddNewCard);
