@@ -112,7 +112,7 @@ function handleAddNewCart (evt) {
   closePopup(popupAddCard);
   formNewElement.reset();
   console.log(formNewElement)
-  cardFormValidator.disableButton();
+  cardFormValidator.disableSubmitButton();
 }
 
 // С Л У Ш А Т Е Л И
