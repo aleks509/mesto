@@ -1,6 +1,8 @@
 import Card  from './Сard.js';
 import { FormValidator } from './FormValidator.js';
 import { initialCards, configForm } from './constants.js'
+import Section from './Section.js';
+
 // П Е Р Е М Е Н Н Ы Е
 const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_about');
@@ -84,18 +86,31 @@ function openView(img, title) {
 function closeView(event) {
   closePopup(viewPopup);
 }
-// функция создания экземпляра класса Card
-function createCard(item) {
-  const card = new Card (item, '.element-template', openView);
-  const cardNewElement = card.createCard();
-  return cardNewElement;
-  //
-}
+// функция создания экземпляра класса Card - создание и отрисовка данных на странице
+// function createCard(item) {
+//   const card = new Card (item, '.element-template', openView);
+//   const cardNewElement = card.createCard();
+//   return cardNewElement;
+//   //
+// }
 // цикл применения функии создания экз Класса к отрисовки каждой карточки и вставляем в контейнер
-initialCards.forEach((item) => {
-  const newCard = createCard(item);
-  cardsContainer.append(newCard);
-});
+
+// initialCards.forEach((item) => {
+//   const newCard = createCard(item);
+//   cardsContainer.append(newCard);
+// });
+// зменяем цикл и createCard
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card (item, '.element-template', openView);
+    const cardNewElement = card.createCard();
+    cardList.addItem(cardNewElement)
+   }
+  },
+  '.elements'
+);
+cardList.renderItems();
 // группируем данные инпутов, применяем функцию создани экз Класса и вставляем вначало контейнера
 function handleAddCard() {
   const inputsObj = {
