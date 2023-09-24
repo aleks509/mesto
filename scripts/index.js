@@ -2,6 +2,9 @@ import Card  from './Сard.js';
 import { FormValidator } from './FormValidator.js';
 import { initialCards, configForm } from './constants.js'
 import Section from './Section.js';
+import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
+
 
 // П Е Р Е М Е Н Н Ы Е
 const editButton = document.querySelector('.profile__edit-button');
@@ -75,20 +78,16 @@ function handleEscClick(evt) {
     closePopup(openedPopup)
 }
 };
-//открытиЕ попапа viewPhoto,
-function openView(img, title) {
-  viewPhoto.src = img;
-  viewTitle.textContent = title;
-  viewPhoto.alt = title;
-  openPopup(viewPopup);
-}
+
+
 // закрытие попапа viewPhoto
 function closeView(event) {
   closePopup(viewPopup);
 }
+
 // функция создания экземпляра класса Card - создание и отрисовка данных на странице
 // function createCard(item) {
-//   const card = new Card (item, '.element-template', openView);
+//   const card = new Card (item, '.element-template', handleImageClick);
 //   const cardNewElement = card.createCard();
 //   return cardNewElement;
 //   //
@@ -103,7 +102,7 @@ function closeView(event) {
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card (item, '.element-template', openView);
+    const card = new Card (item, '.element-template', handleImageClick);
     const cardNewElement = card.createCard();
     cardList.addItem(cardNewElement)
    }
@@ -111,6 +110,13 @@ const cardList = new Section({
   '.elements'
 );
 cardList.renderItems();
+
+
+//открытиЕ попапа viewPhoto,
+
+
+
+
 // группируем данные инпутов, применяем функцию создани экз Класса и вставляем вначало контейнера
 function handleAddCard() {
   const inputsObj = {
@@ -136,6 +142,7 @@ buttonClosePopupProfile.addEventListener('click', () => {
 });
 popupProfile.addEventListener('click', (evt) => {handleOverlayClick(evt)});
 formProfile.addEventListener('submit', handleProfileSubmit);
+
 addButton.addEventListener('click', () => {openPopup(popupAddCard)});
 closeBtnAddCard.addEventListener('click', () => {closePopup(popupAddCard)});
 // обработчик для закрытия попапа Новое место  по overlay
@@ -144,3 +151,10 @@ popupAddCard.addEventListener('click', (evt) => {handleOverlayClick(evt, popupAd
 viewPopup.addEventListener('click', (evt) => {handleOverlayClick(evt)});
 viewClose.addEventListener('click', closeView)
 formAddCard.addEventListener('submit', handleAddNewCard);
+
+
+const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
+
+function handleImageClick(img, title) {
+  PopupViewPhoto.openPopup(img, title);
+}
