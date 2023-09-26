@@ -19,6 +19,9 @@ export default class Section {
       this._renderer(item);
     })
   }
+
+
+
 }
 // Создайте класс Section
 // Создайте класс Section, который отвечает за отрисовку элементов на странице. Этот класс:

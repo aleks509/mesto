@@ -33,6 +33,4 @@ export default class PopupWithImage extends Popup {
 // function closeView(event) {
 //   closePopup(viewPopup);
 // // }
-// this._popupSelector.querySelector('.popup__photo').src = img;
-// this._popupSelector.querySelector('.popup__photo').alt = title;
-// this._popupSelector.querySelector('.popup__photo-title').textContent = title;
+

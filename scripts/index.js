@@ -4,6 +4,7 @@ import { initialCards, configForm } from './constants.js'
 import Section from './Section.js';
 import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 
 
 // П Е Р Е М Е Н Н Ы Е
@@ -36,16 +37,17 @@ const linkInputLink = formAddCard.querySelector('.form__input_type_link');
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
 profileFormValidator.enableValidation();
+
 const cardFormValidator = new FormValidator(configForm, formAddCard);
 cardFormValidator.enableValidation();
 
 // Ф У Н К Ц И И
 // // универсальная Ф открытия попапов
-function openPopup(popup) {
-  popup.classList.add('popup_opened')
-  // закрытие попапов по Esc
-  document.addEventListener('keydown', handleEscClick);
-}
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened')
+//   // закрытие попапов по Esc
+//   document.addEventListener('keydown', handleEscClick);
+// }
 // // универсальная Ф закрытия попапов
 function closePopup(popup) {
   popup.classList.remove('popup_opened')
@@ -98,7 +100,8 @@ function closeView(event) {
 //   const newCard = createCard(item);
 //   cardsContainer.append(newCard);
 // });
-// зменяем цикл и createCard
+// СТАТИЧЕСКИЕ ДАННЫЕ
+// ВСТАВЛЯЕМ СТАТИЧЕСКИЕ ДАННЫЕ В КОНТЕЙНЕР
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
@@ -109,52 +112,80 @@ const cardList = new Section({
   },
   '.elements'
 );
-cardList.renderItems();
-
 
 //открытиЕ попапа viewPhoto,
-
-
-
-
-// группируем данные инпутов, применяем функцию создани экз Класса и вставляем вначало контейнера
-function handleAddCard() {
-  const inputsObj = {
-    name: nameInputPlace.value,
-    link: linkInputLink.value
-  }
-  const newCard = createCard(inputsObj)
-  cardsContainer.prepend(newCard);
-}
-// Добавляем новую карточку
-function handleAddNewCard (evt) {
-  evt.preventDefault();
-  handleAddCard();
-  closePopup(popupAddCard);
-  formAddCard.reset();
-  cardFormValidator.disableSubmitButton();
-}
-
-// С Л У Ш А Т Е Л И
-editButton.addEventListener('click', openProfilePopup);
-buttonClosePopupProfile.addEventListener('click', () => {
-  closePopup(popupProfile)
-});
-popupProfile.addEventListener('click', (evt) => {handleOverlayClick(evt)});
-formProfile.addEventListener('submit', handleProfileSubmit);
-
-addButton.addEventListener('click', () => {openPopup(popupAddCard)});
-closeBtnAddCard.addEventListener('click', () => {closePopup(popupAddCard)});
-// обработчик для закрытия попапа Новое место  по overlay
-popupAddCard.addEventListener('click', (evt) => {handleOverlayClick(evt, popupAddCard)});
-// обработчик клика по overlay (добавляем глобально, что он не уставалвивался каждый раз при открыии фо)
-viewPopup.addEventListener('click', (evt) => {handleOverlayClick(evt)});
-viewClose.addEventListener('click', closeView)
-formAddCard.addEventListener('submit', handleAddNewCard);
-
 
 const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
 
 function handleImageClick(img, title) {
   PopupViewPhoto.openPopup(img, title);
 }
+
+
+// ДИНАМИЧЕСКИЕ ДАННЫЕ
+
+// Новая карточка
+
+const popupNewCard = new PopupWithForm ('.popup_type_new-element', handleFormSubmit);
+
+// функция сабмита формы принимает объект с данными инпутов
+function handleFormSubmit(inputValuesObject) {
+  const newPhoto = new Card(inputValuesObject, '.element-template', handleImageClick)
+  const newPhotoElement = newPhoto.createCard()
+  cardsContainer.prepend(newPhotoElement);
+  cardFormValidator.enableValidation();
+
+}
+popupNewCard.setEventListeners();
+// отрисовка карточек
+cardList.renderItems();
+// инициализация формы
+
+// const formRenderer = new Section({
+//   data: []
+// },'.elements');
+// const formElement = popupNewCard.generate()
+// formRenderer.addItem(formElement);
+
+
+// группируем данные инпутов, применяем функцию создани экз Класса и вставляем вначало контейнера
+// function handleAddCard() {
+//   const inputsObj = {
+//     name: nameInputPlace.value,
+//     link: linkInputLink.value
+//   }
+//   const newCard = createCard(inputsObj)
+//   cardsContainer.prepend(newCard);
+// }
+// Добавляем новую карточку
+// function handleAddNewCard (evt) {
+//   evt.preventDefault();
+//   handleAddCard();
+//   closePopup(popupAddCard);
+//   formAddCard.reset();
+//   cardFormValidator.disableSubmitButton();
+// }
+
+// С Л У Ш А Т Е Л И
+editButton.addEventListener('click', openProfilePopup);
+
+buttonClosePopupProfile.addEventListener('click', () => {
+  closePopup(popupProfile)
+});
+popupProfile.addEventListener('click', (evt) => {handleOverlayClick(evt)});
+formProfile.addEventListener('submit', handleProfileSubmit);
+
+addButton.addEventListener('click', () => {
+  popupNewCard.openPopup()
+});
+
+
+// closeBtnAddCard.addEventListener('click', () => {closePopup(popupAddCard)});
+// обработчик для закрытия попапа Новое место  по overlay
+popupAddCard.addEventListener('click', (evt) => {handleOverlayClick(evt, popupAddCard)});
+// обработчик клика по overlay (добавляем глобально, что он не уставалвивался каждый раз при открыии фо)
+viewPopup.addEventListener('click', (evt) => {handleOverlayClick(evt)});
+viewClose.addEventListener('click', closeView)
+// formAddCard.addEventListener('submit', handleAddNewCard);
+
+
