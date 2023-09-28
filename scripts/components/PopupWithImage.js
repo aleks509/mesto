@@ -11,6 +11,7 @@ export default class PopupWithImage extends Popup {
     this._image.alt = title;
     this._title.textContent = title;
     super.openPopup()
+    super.setEventListeners()
   };
 
   }
@@ -21,16 +22,5 @@ export default class PopupWithImage extends Popup {
 // В методе open класса PopupWithImage нужно вставлять в попап
 //  картинку с src изображения и подписью к картинке.
 
-//открытиЕ попапа viewPhoto,
 
-// function openView(img, title) {
-//   viewPhoto.src = img;
-//   viewTitle.textContent = title;
-//   viewPhoto.alt = title;
-//   openPopup(viewPopup);
-// }
-// // закрытие попапа viewPhoto
-// function closeView(event) {
-//   closePopup(viewPopup);
-// // }
 

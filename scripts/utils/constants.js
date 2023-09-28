@@ -33,5 +33,28 @@ const configForm = {
   inputErrorClass: "form__input_type_error"
 };
 
+// П Е Р Е М Е Н Н Ы Е
+const editButton = document.querySelector('.profile__edit-button');
+const popupProfile = document.querySelector('.popup_type_about');
+const formProfile = popupProfile.querySelector('.form');
+const nameInput = popupProfile.querySelector('.form__input_type_name');
+const jobInput = popupProfile.querySelector('.form__input_type_about');
+//  Новое место
+const addButton = document.querySelector('.profile__add-button');
+// Добавляем попап Новое место
+const formAddCard = document.querySelector('.form-new-element');
+const cardsContainer = document.querySelector('.elements');
 
-export { initialCards, configForm }
+
+export {
+   initialCards,
+   configForm,
+   editButton,
+   popupProfile,
+   formProfile,
+   nameInput,
+   jobInput,
+   addButton,
+   formAddCard,
+   cardsContainer
+  }
