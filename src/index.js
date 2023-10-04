@@ -1,4 +1,4 @@
-import '../src/index.css';
+import './index.css';
 
 import Card  from '../scripts/components/Сard.js';
 import { FormValidator } from '../scripts/components/FormValidator.js';
@@ -26,13 +26,17 @@ profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(configForm, formAddCard);
 cardFormValidator.enableValidation();
 
-
+// ф создания карточки, которую вызываем при создании экз класса
+function createCard(item) {
+  // тут создаете карточку и возвращаете ее
+  const cardElement = new Card (item, '.element-template', handleImageClick)
+  return cardElement.createCard();
+}
 // создаем section -  Отвечает за отрисовку элементов на странице
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card (item, '.element-template', handleImageClick);
-    const cardNewElement = card.createCard();
+    const cardNewElement = createCard(item);
     cardList.addItem(cardNewElement)
    }
   },
@@ -40,8 +44,9 @@ const cardList = new Section({
 );
 // отрисовка карточек
 cardList.renderItems();
-//открытиЕ попапа viewPhoto,
+// попап viewPhoto,
 const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
+
 // Ф вставки данных, которую надо передать как ссылку в класс Card
 function handleImageClick(img, title) {
   PopupViewPhoto.openPopup(img, title);
@@ -57,17 +62,16 @@ const profilePopup = new UserInfo({
 })
 // функция сабмита формы, принимает объект с данными инпутов формы
 function handleFormSubmit(inputValuesObject) {
-  const newPhoto = new Card(inputValuesObject, '.element-template', handleImageClick)
-  const newPhotoElement = newPhoto.createCard()
-  cardsContainer.prepend(newPhotoElement);
-  cardFormValidator.enableValidation();
+  const name = inputValuesObject.place
+  const link = inputValuesObject.link
+  const newPhotoElement = createCard({ name, link })
+  cardList.prependItem(newPhotoElement);
 }
 // открытие попапа Профиль и подстановка  данных
 function hadleOpenInfoProfile() {
   profileFormValidator.disableSubmitButton();
   const profileUserInfo = profilePopup.getUserInfo();
-  nameInput.value = profileUserInfo.name
-  jobInput.value = profileUserInfo.about;
+  popupUserInfo.setInputValues(profileUserInfo);
 }
 // функция сабмита Изменения Профила
 function handleSubmitProfile(inputValuesObject) {
@@ -75,6 +79,8 @@ function handleSubmitProfile(inputValuesObject) {
   const about = inputValuesObject.about
   profilePopup.setUserInfo(name, about)
 }
+
+
 
 // С Л У Ш А Т Е Л И
 // Profile
@@ -91,7 +97,7 @@ addButton.addEventListener('click', () => {
 
 popupNewCard.setEventListeners();
 
-
+PopupViewPhoto.setEventListeners();
 
 
 

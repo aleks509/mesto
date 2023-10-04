@@ -8,8 +8,7 @@ export default class PopupWithForm extends Popup{
   }
   // Этот метод собирает массив всех полей в форме,
   //  обходит их и добавляет их значения в объект.
-  //  Ключами этого объекта будут атрибуты name каждого поля:ы
-// здесь лежит объект
+  //  Ключами этого объекта будут атрибуты name каждого поля:
   _getInputValues() {
     this._formValues = {};
     this._inputList.forEach(input => {
@@ -17,9 +16,8 @@ export default class PopupWithForm extends Popup{
     })
 
     return this._formValues;
-
-
   }
+
   setEventListeners() {
     super.setEventListeners()
     this._form.addEventListener('submit', (evt) => {
@@ -28,6 +26,14 @@ export default class PopupWithForm extends Popup{
       this.closePopup();
     });
   }
+// заменили функцию(вставки инфы из профиля в поля формы) на метод класса
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+         // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
+         input.value = data[input.name];
+        });
+  }
+
 
   closePopup() {
     super.closePopup()
