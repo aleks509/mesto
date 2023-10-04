@@ -1,8 +1,8 @@
 export default class Card {
   // параметры коструктора - обект и селектор разметки и ссылка на функцию открытия openView(img, title)
-  constructor (data, templateSelector, handleImageClick) {
-    this._name = data.name;
-    this._link = data.link;
+  constructor ({ name, link }, templateSelector, handleImageClick) {
+    this._name = name;
+    this._link = link;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
 

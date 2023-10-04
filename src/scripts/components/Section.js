@@ -19,9 +19,9 @@ export default class Section {
       this._renderer(item);
     })
   }
-
-
-
+  prependItem(element) {
+    this._container.prepend(element)
+  }
 }
 // Создайте класс Section
 // Создайте класс Section, который отвечает за отрисовку элементов на странице. Этот класс:
