@@ -27,13 +27,17 @@ const api = new Api({
     authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520'
 }
 })
-//данныые от сервера
+
+//данные с сервера
 api.getUserInfo()
   .then((newPersonalInfo) => {
     const name = newPersonalInfo.name
     const about = newPersonalInfo.about
     const avatar = newPersonalInfo.avatar
-  profilePopup.setUserInfo(name, about, avatar)
+  profilePopup.setNewUserInfo(name, about, avatar)
+  })
+  .catch((error) => {
+    console.log(error)
   })
 
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
@@ -61,6 +65,21 @@ const cardList = new Section({
 );
 // отрисовка карточек
 cardList.renderItems();
+
+//карточки с сервера
+api.getCards()
+  .then((cards) => {
+    const newCardsArray = cards
+    newCardsArray.forEach(array => {
+      const newCard = createCard(array)
+      // console.log(newCard)
+      cardList.prependItem(newCard)
+    })
+    })
+    .catch((err) => {
+      console.log(err)
+  })
+
 // попап viewPhoto,
 const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
 
@@ -79,12 +98,13 @@ const profilePopup = new UserInfo({
 })
 
 
-// функция сабмита формы, принимает объект с данными инпутов формы
+// функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
 function handleFormSubmit(inputValuesObject) {
   const name = inputValuesObject.place
   const link = inputValuesObject.link
   const newPhotoElement = createCard({ name, link })
   cardList.prependItem(newPhotoElement);
+  api.addNewCard(name, link)
 }
 
 // открытие попапа Профиль и подстановка  данных
@@ -98,11 +118,12 @@ function hadleOpenInfoProfile() {
 })
 }
 
-// функция сабмита Изменения Профила
+// функция сабмита Изменения Профиля
 function handleSubmitProfile(inputValuesObject) {
   const name = inputValuesObject.name
   const about = inputValuesObject.about
   profilePopup.setUserInfo(name, about)
+  api.editProfile(name, about)
 }
 
 

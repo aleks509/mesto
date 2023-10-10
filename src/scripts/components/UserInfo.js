@@ -15,12 +15,16 @@ export default class UserInfo  {
     }
   }
 
-  setUserInfo(name, about, avatar) {
+  setUserInfo(name, about) {
+    this._name.textContent = name
+    this._about.textContent = about
+  }
+
+  setNewUserInfo(name, about, avatar) {
     this._name.textContent = name
     this._about.textContent = about
     this._avatar.src = avatar
   }
-
 }
 
 // Класс UserInfo отвечает за управление отображением информации о пользователе на странице.
