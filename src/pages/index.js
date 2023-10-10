@@ -27,7 +27,14 @@ const api = new Api({
     authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520'
 }
 })
+//данныые от сервера
 api.getUserInfo()
+  .then((newPersonalInfo) => {
+    const name = newPersonalInfo.name
+    const about = newPersonalInfo.about
+    const avatar = newPersonalInfo.avatar
+  profilePopup.setUserInfo(name, about, avatar)
+  })
 
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
@@ -70,6 +77,8 @@ const profilePopup = new UserInfo({
   nameElement: '.profile__title',
   aboutElement: '.profile__subtitle'
 })
+
+
 // функция сабмита формы, принимает объект с данными инпутов формы
 function handleFormSubmit(inputValuesObject) {
   const name = inputValuesObject.place
@@ -77,12 +86,18 @@ function handleFormSubmit(inputValuesObject) {
   const newPhotoElement = createCard({ name, link })
   cardList.prependItem(newPhotoElement);
 }
+
 // открытие попапа Профиль и подстановка  данных
 function hadleOpenInfoProfile() {
   profileFormValidator.disableSubmitButton();
   const profileUserInfo = profilePopup.getUserInfo();
-  popupUserInfo.setInputValues(profileUserInfo);
+  // popupUserInfo.setInputValues(profileUserInfo);
+  api.getUserInfo()
+  .then((personalInfo) => {
+    popupUserInfo.setInputValues(personalInfo);
+})
 }
+
 // функция сабмита Изменения Профила
 function handleSubmitProfile(inputValuesObject) {
   const name = inputValuesObject.name
