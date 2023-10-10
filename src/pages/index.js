@@ -18,6 +18,16 @@ import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
+import Api from '../scripts/components/Api.js';
+
+
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-77',
+  headers: {
+    authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520'
+}
+})
+api.getUserInfo()
 
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
