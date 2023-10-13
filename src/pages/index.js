@@ -19,6 +19,7 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
+import Popup from '../scripts/components/Popup';
 
 
 const api = new Api({
@@ -27,18 +28,23 @@ const api = new Api({
     authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520'
 }
 })
-
-//данные с сервера
+// myId 09519f0944205716a8ba06bd
+//me данные с сервера
 api.getUserInfo()
   .then((newPersonalInfo) => {
     const name = newPersonalInfo.name
     const about = newPersonalInfo.about
     const avatar = newPersonalInfo.avatar
-  profilePopup.setNewUserInfo(name, about, avatar)
+    const myId = newPersonalInfo._id
+    profilePopup.setNewUserInfo(name, about, avatar)
+    console.log(myId + ` my ID`)
+
   })
   .catch((error) => {
     console.log(error)
   })
+
+
 
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
@@ -50,7 +56,8 @@ cardFormValidator.enableValidation();
 // ф создания карточки, которую вызываем при создании экз класса
 function createCard(item) {
   // тут создаете карточку и возвращаете ее
-  const cardElement = new Card (item, '.element-template', handleImageClick)
+  const cardElement = new Card (item, '.element-template', handleImageClick, handlePopupDeleteCard)
+
   return cardElement.createCard();
 }
 // создаем section -  Отвечает за отрисовку элементов на странице
@@ -66,19 +73,28 @@ const cardList = new Section({
 // отрисовка карточек
 cardList.renderItems();
 
+
 //карточки с сервера
 api.getCards()
   .then((cards) => {
     const newCardsArray = cards
+
     newCardsArray.forEach(array => {
       const newCard = createCard(array)
-      // console.log(newCard)
       cardList.prependItem(newCard)
+      console.log(array.owner._id + ` owner ID`)
     })
     })
     .catch((err) => {
       console.log(err)
   })
+
+
+// попап deleteCard
+const popupDeleteCard = new Popup('.popup_type_delete-photo')
+function handlePopupDeleteCard() {
+  popupDeleteCard.openPopup()
+}
 
 // попап viewPhoto,
 const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
@@ -96,6 +112,7 @@ const profilePopup = new UserInfo({
   nameElement: '.profile__title',
   aboutElement: '.profile__subtitle'
 })
+
 
 
 // функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
@@ -144,7 +161,7 @@ addButton.addEventListener('click', () => {
 popupNewCard.setEventListeners();
 
 PopupViewPhoto.setEventListeners();
-
+popupDeleteCard.setEventListeners();
 
 
 // инициализация формы

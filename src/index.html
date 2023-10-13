@@ -80,14 +80,26 @@
       <h3 class="popup__photo-title">-</h3>
     </div>
   </div>
+   <!-- popup delete photo -->
+   <div class= "popup popup_type_delete-photo">
+    <div class="popup__delete-container">
+      <button type="button" class="popup__button-close" aria-label="Закрыть"></button>
+      <h3 class="popup__confirmation">Вы уверены?</h3>
+      <button type="submit" class="popup__button-yes">Да</button>
+    </div>
+
+   </div>
   <!-- template -->
   <template class="element-template">
     <article class="element">
-    <button class="element__trash" type="button" aria-label="Корзина"></button>
-    <img src="./images/Elbrus.png" alt="" class="element__image">
-    <div class="element__inner">
+      <button class="element__trash element__trash_active " type="button" aria-label="Корзина"></button>
+      <img src="./images/Elbrus.png" alt="" class="element__image">
+      <div class="element__inner">
       <h2 class="element__title"></h2>
+      <div class="element__like-box">
       <button class="element__like" type="button" aria-label="Нравится"></button>
+      <span class="element__likemeter">12</span>
+      </div>
     </div>
   </article>
   </template>

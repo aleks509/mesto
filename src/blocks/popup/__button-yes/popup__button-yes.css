@@ -1,0 +1,33 @@
+.popup__button-yes {
+
+    border-radius: 2px;
+    background: #000;
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21.78px;
+    max-width: 358px;
+    height: 50px;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .form__button-save:hover {
+  opacity: 0.8;
+  transition: opacity 0.1s ease;
+  }
+
+  @media screen and (max-width: 576px) {
+    .form__button-save {
+    margin-top: 10px;
+    max-width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 16.94px;
+    }
+  }
+
