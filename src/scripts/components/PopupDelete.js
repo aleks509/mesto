@@ -10,10 +10,9 @@ export default class PopupDelete extends Popup{
 
   openPopupDelete() {
      super.openPopup()
-
   }
 
-  _handleCardRemove(evt) {
+  handleCardRemove(evt) {
     evt.preventDefault();
     const cardElement = this.buttonConfirm.closest('.element')
     // cardElement.remove();
@@ -24,6 +23,6 @@ export default class PopupDelete extends Popup{
 
 setEventListeners() {
   super.setEventListeners()
-  this._buttonConfirm.addEventListener('submit', this.__handleCardRemove)
+  this._buttonConfirm.addEventListener('submit', this._handleCardRemove)
 }
 }

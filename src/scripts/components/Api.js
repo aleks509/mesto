@@ -34,10 +34,7 @@ export default class Api {
   editProfile(name, about) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: `${name}`,
         about: `${about}`
@@ -55,10 +52,7 @@ export default class Api {
   addNewCard(name, link) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({ name, link })
   })
     .then((response) => {
@@ -69,5 +63,12 @@ export default class Api {
       }
     })
   }
-
+  // /cards/likes/cardId
+  likeCard(cardId) {//cardId это _id карточки, которую удаляем
+    fetch(`${this._url}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers,
+      body: JSON.stringify()
+    })
+  }
 }

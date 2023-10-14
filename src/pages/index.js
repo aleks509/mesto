@@ -25,26 +25,67 @@ import Popup from '../scripts/components/Popup';
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-77',
   headers: {
-    authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520'
+    authorization: 'f7b5bbba-2a09-453b-983e-947bcdc15520',
+    'Content-Type': 'application/json'
 }
 })
 // myId 09519f0944205716a8ba06bd
 //me данные с сервера
-api.getUserInfo()
-  .then((newPersonalInfo) => {
-    const name = newPersonalInfo.name
-    const about = newPersonalInfo.about
-    const avatar = newPersonalInfo.avatar
-    const myId = newPersonalInfo._id
+// api.getUserInfo()
+//   .then((newPersonalInfo) => {
+//     const name = newPersonalInfo.name
+//     const about = newPersonalInfo.about
+//     const avatar = newPersonalInfo.avatar
+//     const myId = newPersonalInfo._id
+//     profilePopup.setNewUserInfo(name, about, avatar)
+//     console.log(myId + ` my ID`)
+
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+//карточки с сервера
+// api.getCards()
+//   .then((cards) => {
+//     const newCardsArray = cards
+
+//     newCardsArray.forEach(array => {
+//       const newCard = createCard(array)
+//       cardList.prependItem(newCard)
+//       console.log(array.owner._id + ` owner ID`)
+//     })
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//   })
+
+
+  Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([userInfo, cards]) => {
+    console.log([userInfo, cards]);
+    const name = userInfo.name
+    const about = userInfo.about
+    const avatar = userInfo.avatar
+    const myId = userInfo._id
+    console.log(myId + ` myID`)
     profilePopup.setNewUserInfo(name, about, avatar)
-    console.log(myId + ` my ID`)
-
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-
+    // const newCardsArray = cards
+    cards.forEach(card => {
+      const ownerId = card._id
+      console.log(ownerId + ` ownerID`)
+      const newCard = new Card ({
+        name: card.name,
+        link: card.link,
+        likes: card.likes,
+        myId: myId,
+        ownerId: ownerId
+      },
+      '.element-template', handleImageClick, handlePopupDeleteCard)
+      // return newCard.createCard();
+      cardList.prependItem(newCard.createCard())
+      })
+   })
 
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
@@ -57,7 +98,6 @@ cardFormValidator.enableValidation();
 function createCard(item) {
   // тут создаете карточку и возвращаете ее
   const cardElement = new Card (item, '.element-template', handleImageClick, handlePopupDeleteCard)
-
   return cardElement.createCard();
 }
 // создаем section -  Отвечает за отрисовку элементов на странице
@@ -73,21 +113,6 @@ const cardList = new Section({
 // отрисовка карточек
 cardList.renderItems();
 
-
-//карточки с сервера
-api.getCards()
-  .then((cards) => {
-    const newCardsArray = cards
-
-    newCardsArray.forEach(array => {
-      const newCard = createCard(array)
-      cardList.prependItem(newCard)
-      console.log(array.owner._id + ` owner ID`)
-    })
-    })
-    .catch((err) => {
-      console.log(err)
-  })
 
 
 // попап deleteCard
