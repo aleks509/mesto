@@ -1,28 +1,39 @@
 import Popup from './Popup.js';
+// Чтобы подтвердить удаление карточки,
+// добавлен ещё один вид попапа.
+// Ему можно назначить обработчик сабмита,
+// чтобы установить id карточки.
 export default class PopupDelete extends Popup{
-  constructor (popupSelector) {//в конструктор передаем селектор попапа
+  constructor (popupSelector, handleSubmitPopupDelete) {
+    //в конструктор передаем селектор попапа и обработчик сабмита с id карточки
     super(popupSelector)
     this._buttonConfirm = this._popup.querySelector('.popup__button-yes');
-
-    this.__handleCardRemove = this.__handleCardRemove.bind(this);
+    this._handleSubmitPopupDelete = handleSubmitPopupDelete;
   }
 
+  setEventListeners() {
+      super.setEventListeners()
+      this._buttonConfirm.addEventListener('click', () => {
+        this._handleSubmitPopupDelete(this._cardId)
+        console.log(this._cardId)
+      })
+    }
 
-  openPopupDelete() {
-     super.openPopup()
+  setIdCard(cardId) {
+    this._cardId = cardId
   }
 
-  handleCardRemove(evt) {
-    evt.preventDefault();
-    const cardElement = this.buttonConfirm.closest('.element')
-    // cardElement.remove();
-    console.log(cardElement)
-    // this._element.remove();
-    // this._element = null;
 }
 
-setEventListeners() {
-  super.setEventListeners()
-  this._buttonConfirm.addEventListener('submit', this._handleCardRemove)
-}
-}
+
+
+
+
+// handleCardRemove(evt) {
+//     evt.preventDefault();
+//     this._element.remove();
+//     this._element = null;
+// }
+
+//
+//

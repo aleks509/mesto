@@ -1,11 +1,12 @@
 export default class Card {
   // параметры коструктора - обект и селектор разметки и ссылка на функцию открытия openView(img, title)
-  constructor ({ name, link, likes, myId, ownerId }, templateSelector, handleImageClick, handlePopupDeleteCard) {
+  constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handlePopupDeleteCard) {
     this._name = name;
     this._link = link;
     this._likes = likes;
     this._myId = myId;
     this._ownerId = ownerId;
+    this._cardId = cardId;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
     this._handlePopupDeleteCard = handlePopupDeleteCard;
@@ -30,11 +31,11 @@ export default class Card {
       this._likeMeter = this._element.querySelector('.element__likemeter');
       this._trash = this._element.querySelector('.element__trash')
       this._setEventListeners();
-      this._idMatching()
+
       this._titleElement.textContent = this._name;
       this._imageElement.src = this._link;
       this._imageElement.alt = this._name;
-
+      this.idMatching()
       return this._element;
   }
 
@@ -44,14 +45,18 @@ export default class Card {
     this._likeMeter.textContent = this._likes.length;
 
   }
-  _idMatching() {
+  idMatching() {
     if (this._myId === this._ownerId) {
       this._trash.addEventListener('click', () => {
-        this._handlePopupDeleteCard()
+        this._handlePopupDeleteCard(this._cardId)
       });
     } else {
       this._trash.remove();
     }
+  }
+  removeCard() {
+    this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {

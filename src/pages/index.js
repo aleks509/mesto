@@ -20,6 +20,7 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 import Popup from '../scripts/components/Popup';
+import PopupDelete from '../scripts/components/PopupDelete';
 
 
 const api = new Api({
@@ -30,37 +31,6 @@ const api = new Api({
 }
 })
 // myId 09519f0944205716a8ba06bd
-//me данные с сервера
-// api.getUserInfo()
-//   .then((newPersonalInfo) => {
-//     const name = newPersonalInfo.name
-//     const about = newPersonalInfo.about
-//     const avatar = newPersonalInfo.avatar
-//     const myId = newPersonalInfo._id
-//     profilePopup.setNewUserInfo(name, about, avatar)
-//     console.log(myId + ` my ID`)
-
-//   })
-//   .catch((error) => {
-//     console.log(error)
-//   })
-
-//карточки с сервера
-// api.getCards()
-//   .then((cards) => {
-//     const newCardsArray = cards
-
-//     newCardsArray.forEach(array => {
-//       const newCard = createCard(array)
-//       cardList.prependItem(newCard)
-//       console.log(array.owner._id + ` owner ID`)
-//     })
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//   })
-
-
   Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cards]) => {
     console.log([userInfo, cards]);
@@ -68,24 +38,30 @@ const api = new Api({
     const about = userInfo.about
     const avatar = userInfo.avatar
     const myId = userInfo._id
-    console.log(myId + ` myID`)
+    // console.log(myId + ` myID`)
     profilePopup.setNewUserInfo(name, about, avatar)
     // const newCardsArray = cards
     cards.forEach(card => {
-      const ownerId = card._id
-      console.log(ownerId + ` ownerID`)
+      const ownerId = card.owner._id
+       // console.log(ownerId + ` ownerID`)
+      const cardId = card._id
+      // console.log(cardId + ` cardID`)
       const newCard = new Card ({
         name: card.name,
         link: card.link,
         likes: card.likes,
         myId: myId,
-        ownerId: ownerId
+        ownerId: ownerId,
+        cardId: cardId
       },
-      '.element-template', handleImageClick, handlePopupDeleteCard)
-      // return newCard.createCard();
+      '.element-template', handleImageClick, handlePopupDeleteCard, )
       cardList.prependItem(newCard.createCard())
       })
    })
+   .catch((err) => {
+          console.log(err)
+      })
+
 
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
@@ -100,9 +76,10 @@ function createCard(item) {
   const cardElement = new Card (item, '.element-template', handleImageClick, handlePopupDeleteCard)
   return cardElement.createCard();
 }
+
 // создаем section -  Отвечает за отрисовку элементов на странице
 const cardList = new Section({
-  items: initialCards,
+  items: [],
   renderer: (item) => {
     const cardNewElement = createCard(item);
     cardList.addItem(cardNewElement)
@@ -113,13 +90,27 @@ const cardList = new Section({
 // отрисовка карточек
 cardList.renderItems();
 
-
+// открытие попапа
+function handlePopupDeleteCard(cardId) {
+  popupDeleteCard.openPopup()
+  popupDeleteCard.setIdCard(cardId)
+}
 
 // попап deleteCard
-const popupDeleteCard = new Popup('.popup_type_delete-photo')
-function handlePopupDeleteCard() {
-  popupDeleteCard.openPopup()
+const popupDeleteCard = new PopupDelete('.popup_type_delete-photo', handleSubmitPopupDelete)
+popupDeleteCard.setEventListeners()
+//
+function handleSubmitPopupDelete(cardId) {
+  api.deleteCard(cardId)
+    .then(() => {
+      cardNewElement.removeCard()
+      popupDeleteCard.closePopup()
+    })
+    .catch((err) => {
+      console.log('Ошибка при удалении фото', err)
+    })
 }
+//
 
 // попап viewPhoto,
 const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
@@ -186,7 +177,7 @@ addButton.addEventListener('click', () => {
 popupNewCard.setEventListeners();
 
 PopupViewPhoto.setEventListeners();
-popupDeleteCard.setEventListeners();
+
 
 
 // инициализация формы
