@@ -54,7 +54,26 @@ const api = new Api({
         ownerId: ownerId,
         cardId: cardId
       },
-      '.element-template', handleImageClick, handlePopupDeleteCard, )
+      '.element-template', handleImageClick, handleOpenPopupDeleteCard, {
+        likeCard: (id) => {
+          api.likeCard(id)
+            .then((response) => {
+              const length = response.likes.length
+              // console.log(length)
+              // length + 1
+              newCard.likeMeter(length)
+            })
+        },
+        unlikeCard: (id) => {
+        api.unlikeCard(id)
+          .then((response) => {
+            const length = response.likes.length
+            // console.log(length)
+
+              // length - 1
+              newCard.likeMeter(length)
+          })}
+        })
       cardList.prependItem(newCard.createCard())
       })
    })
@@ -71,9 +90,17 @@ const cardFormValidator = new FormValidator(configForm, formAddCard);
 cardFormValidator.enableValidation();
 
 // ф создания карточки, которую вызываем при создании экз класса
-function createCard(item) {
+function createCard({ name, link, likes, myId, ownerId, cardId }) {
   // тут создаете карточку и возвращаете ее
-  const cardElement = new Card (item, '.element-template', handleImageClick, handlePopupDeleteCard)
+  const cardElement = new Card ({
+    name: name,
+    link: link,
+    likes: likes,
+    myId: myId,
+    ownerId: ownerId,
+    cardId: cardId,
+    }, '.element-template', handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard
+  )
   return cardElement.createCard();
 }
 
@@ -91,26 +118,40 @@ const cardList = new Section({
 cardList.renderItems();
 
 // открытие попапа
-function handlePopupDeleteCard(cardId) {
+function handleOpenPopupDeleteCard(cardId) {
   popupDeleteCard.openPopup()
   popupDeleteCard.setIdCard(cardId)
 }
 
 // попап deleteCard
 const popupDeleteCard = new PopupDelete('.popup_type_delete-photo', handleSubmitPopupDelete)
+
 popupDeleteCard.setEventListeners()
 //
 function handleSubmitPopupDelete(cardId) {
+  console.log(cardId)
   api.deleteCard(cardId)
     .then(() => {
-      cardNewElement.removeCard()
+      // cardNewElement.remove()
       popupDeleteCard.closePopup()
     })
     .catch((err) => {
       console.log('Ошибка при удалении фото', err)
     })
 }
-//
+
+function likeSong(cardId) {
+  api.likeCard(cardId)
+    .then((response) => {
+      console.log(response)
+    })
+}
+// function unlikeSong(cardId) {
+//   api.unlikeCard(cardId)
+//   .then((response) => {
+//     console.log(response)
+//   })
+// }
 
 // попап viewPhoto,
 const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');

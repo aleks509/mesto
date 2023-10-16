@@ -65,7 +65,16 @@ export default class Api {
    return fetch(`${this._url}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers,
-      body: JSON.stringify()
     })
+    .then((response) => oneError(response))
   }
+
+  unlikeCard(cardId) {
+    return fetch(`${this._url}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+  })
+  .then((response) => oneError(response))
 }
+}
+

@@ -1,6 +1,6 @@
 export default class Card {
   // параметры коструктора - обект и селектор разметки и ссылка на функцию открытия openView(img, title)
-  constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handlePopupDeleteCard) {
+  constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handleOpenPopupDeleteCard, { likeCard , unlikeCard }) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -9,7 +9,9 @@ export default class Card {
     this._cardId = cardId;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
-    this._handlePopupDeleteCard = handlePopupDeleteCard;
+    this.handleOpenPopupDeleteCard = handleOpenPopupDeleteCard;
+    this._likeCard = likeCard;
+    this._unlikeCard = unlikeCard
   }
 // приватный метод, который заеберет разметку из HTML, клонирует
 //  и вернет DOM element
@@ -39,22 +41,36 @@ export default class Card {
       return this._element;
   }
 
-// приватные методы обработчика лайка и удаления
   _handleLikeClick() {
-    this._buttonLike.classList.toggle('element__like_active');
-    this._likeMeter.textContent = this._likes.length;
+      this._buttonLike.classList.toggle('element__like_active')
+      this._likeActiveChecking()
+      // this._likeMeter.textContent = this._likes.length;
+    }
 
+  _likeActiveChecking() {
+      if (this._buttonLike.classList.contains('element__like_active')) {
+        this._likeCard(this._cardId)
+      } else {
+        this._unlikeCard(this._cardId)
+        // this._likeMeter.textContent = this._likes.length - 1
+      }
   }
+  likeMeter(length) {
+    this._likeMeter.textContent = length
+  }
+
+
   idMatching() {
     if (this._myId === this._ownerId) {
       this._trash.addEventListener('click', () => {
-        this._handlePopupDeleteCard(this._cardId)
+        this.removeCard()
       });
     } else {
       this._trash.remove();
     }
   }
   removeCard() {
+    this.handleOpenPopupDeleteCard(this._cardId)
     this._element.remove();
     this._element = null;
   }

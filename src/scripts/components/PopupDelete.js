@@ -15,7 +15,7 @@ export default class PopupDelete extends Popup{
       super.setEventListeners()
       this._buttonConfirm.addEventListener('click', () => {
         this._handleSubmitPopupDelete(this._cardId)
-        console.log(this._cardId)
+        this.closePopup();
       })
     }
 
