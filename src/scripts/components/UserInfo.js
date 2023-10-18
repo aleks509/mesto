@@ -2,8 +2,8 @@ export default class UserInfo  {
   constructor({nameElement, aboutElement}) {
     this._name = document.querySelector(nameElement);
     this._about = document.querySelector(aboutElement);
-    // this._inputName = document.querySelector('.form__input_type_name');
-    // this._inputAbout = document.querySelector('.form__input_type_about');
+    this._avatar = document.querySelector('.profile__photo')
+
   }
   // возвращает объект с данными пользователя.
   // Этот метод пригодится когда данные пользователя
@@ -15,9 +15,15 @@ export default class UserInfo  {
     }
   }
 
-  setUserInfo(name, about) {
-   this._name.textContent = name
+  // setUserInfo(name, about) {
+  //   this._name.textContent = name
+  //   this._about.textContent = about
+  // }
+
+  setNewUserInfo({ name, about, avatar }) {
+    this._name.textContent = name
     this._about.textContent = about
+    this._avatar.src = avatar
   }
 }
 

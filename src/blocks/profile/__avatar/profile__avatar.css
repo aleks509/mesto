@@ -1,7 +1,15 @@
 .profile__avatar {
   padding-right: 26.5px;
+  position: relative;
+  /* background-size: cover;
+  overflow: hidden; */
 }
 
+.profile__avatar:hover {
+  /* opacity: 0.3;
+  transition: opacity 0.3s ease;
+  cursor: pointer; */
+}
 
 @media screen and (max-width: 768px) {
   .profile__avatar {

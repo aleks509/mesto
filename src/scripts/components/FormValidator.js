@@ -10,13 +10,13 @@ class FormValidator {
   };
 
   _showError(inputElement) {
-      const errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
+      const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
       errorElement.textContent = inputElement.validationMessage;
       inputElement.classList.add(this._inputErrorClass);
   };
 
   _hideError(inputElement) {
-      const errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
+      const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
       inputElement.classList.remove(this._inputErrorClass);
       errorElement.textContent = inputElement.validationMessage;
   };
