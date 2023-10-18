@@ -180,15 +180,11 @@ const profilePopup = new UserInfo({
 const popupChangeAvatar = new PopupWithForm('.popup_type_change-avatar', handleChangeAvatarForm)
 
 function handleChangeAvatarForm(inputvalue) {
-  console.log(inputvalue)
-  // const avatar = inputvalue.avatar
-  // api.changeAvatar(avatar)
-  //   .then((avatar) => {
-
-  //     profilePopup.setNewUserInfo({ avatar })
-  //     popupChangeAvatar.closePopup();
-  //   })
-
+  const avatar = inputvalue.avatar
+  console.log(inputvalue.avatar)
+  profilePopup.setNewUserInfo({ avatar })
+  api.changeAvatar(avatar)
+  popupChangeAvatar.closePopup();
 }
 
 // функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
