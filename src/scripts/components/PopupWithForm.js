@@ -4,6 +4,7 @@ export default class PopupWithForm extends Popup{
     super(popupSelector)
     this._handleFormSubmit = handleFormSubmit;
     this._form = this._popup.querySelector('.form')
+    this._inputAvatar = this._popup.querySelector('.form__input')
     this._inputList = Array.from(this._popup.querySelectorAll('.form__input'));
   }
   // Этот метод собирает массив всех полей в форме,
@@ -17,6 +18,11 @@ export default class PopupWithForm extends Popup{
 
     return this._formValues;
   }
+//   getAvatarValue() {
+//     const linkNewphoto = this._inputAvatar.value;
+//     return linkNewphoto
+//  }
+
 
   setEventListeners() {
     super.setEventListeners()
@@ -33,7 +39,6 @@ export default class PopupWithForm extends Popup{
          input.value = data[input.name];
         });
   }
-
 
   closePopup() {
     super.closePopup()

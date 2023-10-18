@@ -44,10 +44,10 @@
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="form" name="form-about" novalidate>
       <fieldset class="form__fieldset">
-        <input name="name" class="form__input form__input_type_name" type="text"
+        <input name="name" id="name" class="form__input form__input_type_name" type="text"
         placeholder="Имя" required minlength="2" maxlength="40">
         <span id="name-error" class="form__error"></span> <!--  связываем спан(где сообщение об ошибке) с инпутом посредством id -->
-        <input name="about" class="form__input form__input_type_about" type="text" placeholder="О себе"
+        <input name="about" id="about" class="form__input form__input_type_about" type="text" placeholder="О себе"
         required minlength="2" maxlength="200">
         <span id="about-error" class="form__error"></span> <!--  связываем спан(где сообщение об ошибке) с инпутом посредством id -->
       </fieldset>
@@ -62,10 +62,10 @@
       <h3 class="popup__title">Новое место</h3>
       <form class="form form-new-element" name="form-new-element" novalidate>
       <fieldset class="form__fieldset">
-        <input name="place" class="form__input form__input_type_place" type="text"
+        <input name="place" id="place" class="form__input form__input_type_place" type="text"
         placeholder="Название" required minlength="2" maxlength="30">
         <span id="place-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
-        <input name="link" class="form__input form__input_type_link" type="url"
+        <input name="link" id="link" class="form__input form__input_type_link" type="url"
         placeholder="Ссылка на картинку" required>
         <span id="link-error" class="form__error"></span> <!--  связываем спан с инпутом посредством id -->
       </fieldset>
@@ -88,8 +88,19 @@
       <h3 class="popup__confirmation">Вы уверены?</h3>
       <button type="submit" class="popup__button-yes">Да</button>
     </div>
-
    </div>
+     <!-- popup chenge avatar -->
+     <div class= "popup popup_type_change-avatar">
+      <div class="popup__cnange-container">
+        <button type="button" class="popup__button-close" aria-label="Закрыть"></button>
+        <h3 class="popup__confirmation">Обновить аватар</h3>
+        <form class="form form-new-avatar" name="form-new-avatar" novalidate></form>
+          <input name="avatar" id="avatar" class="form__input" type="url"
+          placeholder="Ссылка на новое фото" required>
+          <span id="link-avatar-error" class="form__error"></span>
+        <button type="submit" class="popup__button-yes">Сохранить</button>
+      </div>
+     </div>
   <!-- template -->
   <template class="element-template">
     <article class="element">

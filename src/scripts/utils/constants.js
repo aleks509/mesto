@@ -44,6 +44,9 @@ const addButton = document.querySelector('.profile__add-button');
 // Добавляем попап Новое место
 const formAddCard = document.querySelector('.form-new-element');
 const cardsContainer = document.querySelector('.elements');
+// Изменить аватар
+const avatarChangeButton = document.querySelector('.profile__avatar-edit-button');
+const formNewAva = document.querySelector('.form-new-avatar')
 
 
 export {
@@ -56,5 +59,7 @@ export {
    jobInput,
    addButton,
    formAddCard,
-   cardsContainer
+   cardsContainer,
+   avatarChangeButton,
+   formNewAva
   }

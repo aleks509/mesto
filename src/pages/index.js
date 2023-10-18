@@ -12,7 +12,9 @@ import {
   jobInput,
   addButton,
   formAddCard,
-  cardsContainer
+  cardsContainer,
+  avatarChangeButton,
+  formNewAva
 } from '../scripts/utils/constants.js'
 import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
@@ -39,7 +41,7 @@ const api = new Api({
     const avatar = userInfo.avatar
     const myId = userInfo._id
     // console.log(myId + ` myID`)
-    profilePopup.setNewUserInfo(name, about, avatar)
+    profilePopup.setNewUserInfo({ name, about, avatar })
     // const newCardsArray = cards
     cards.forEach(card => {
       const ownerId = card.owner._id
@@ -89,6 +91,9 @@ profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(configForm, formAddCard);
 cardFormValidator.enableValidation();
 
+// const changeAvatarFormValidator = new FormValidator(configForm, formNewAva)
+// changeAvatarFormValidator.enableValidation()
+
 // ф создания карточки, которую вызываем при создании экз класса
 function createCard({ name, link, likes, myId, ownerId, cardId }) {
   // тут создаете карточку и возвращаете ее
@@ -99,7 +104,7 @@ function createCard({ name, link, likes, myId, ownerId, cardId }) {
     myId: myId,
     ownerId: ownerId,
     cardId: cardId,
-    }, '.element-template', handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard
+    }, '.element-template', handleImageClick, handleOpenPopupDeleteCard, { likeCard, unlikeCard}
   )
   return cardElement.createCard();
 }
@@ -126,7 +131,7 @@ function handleOpenPopupDeleteCard(cardId) {
 // попап deleteCard
 const popupDeleteCard = new PopupDelete('.popup_type_delete-photo', handleSubmitPopupDelete)
 
-popupDeleteCard.setEventListeners()
+
 //
 function handleSubmitPopupDelete(cardId) {
   console.log(cardId)
@@ -140,12 +145,12 @@ function handleSubmitPopupDelete(cardId) {
     })
 }
 
-function likeSong(cardId) {
-  api.likeCard(cardId)
-    .then((response) => {
-      console.log(response)
-    })
-}
+// function likeSong(cardId) {
+//   api.likeCard(cardId)
+//     .then((response) => {
+//       console.log(response)
+//     })
+// }
 // function unlikeSong(cardId) {
 //   api.unlikeCard(cardId)
 //   .then((response) => {
@@ -160,6 +165,8 @@ const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
 function handleImageClick(img, title) {
   PopupViewPhoto.openPopup(img, title);
 }
+// Ф О Р М Ы
+
 // Новая карточка
 const popupNewCard = new PopupWithForm ('.popup_type_new-element', handleFormSubmit);
 // попап открытого Профиля
@@ -170,7 +177,19 @@ const profilePopup = new UserInfo({
   aboutElement: '.profile__subtitle'
 })
 
+const popupChangeAvatar = new PopupWithForm('.popup_type_change-avatar', handleChangeAvatarForm)
 
+function handleChangeAvatarForm(inputvalue) {
+  console.log(inputvalue)
+  // const avatar = inputvalue.avatar
+  // api.changeAvatar(avatar)
+  //   .then((avatar) => {
+
+  //     profilePopup.setNewUserInfo({ avatar })
+  //     popupChangeAvatar.closePopup();
+  //   })
+
+}
 
 // функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
 function handleFormSubmit(inputValuesObject) {
@@ -196,9 +215,11 @@ function hadleOpenInfoProfile() {
 function handleSubmitProfile(inputValuesObject) {
   const name = inputValuesObject.name
   const about = inputValuesObject.about
-  profilePopup.setUserInfo(name, about)
+  profilePopup.setNewUserInfo({name, about})
   api.editProfile(name, about)
 }
+
+
 
 
 
@@ -215,12 +236,18 @@ addButton.addEventListener('click', () => {
   cardFormValidator.disableSubmitButton();
 });
 
+avatarChangeButton.addEventListener('click', () => {
+  popupChangeAvatar.openPopup();
+  // changeAvatarFormValidator.disableSubmitButton();
+});
+
+
 popupNewCard.setEventListeners();
 
 PopupViewPhoto.setEventListeners();
+popupChangeAvatar.setEventListeners();
 
-
-
+popupDeleteCard.setEventListeners()
 // инициализация формы
 // const formRenderer = new Section({
 //   data: []
