@@ -6,6 +6,7 @@ export default class PopupWithForm extends Popup{
     this._form = this._popup.querySelector('.form')
     this._inputAvatar = this._popup.querySelector('.form__input')
     this._inputList = Array.from(this._popup.querySelectorAll('.form__input'));
+    this._submitButton = this._popup.querySelector('.form__button-save')
   }
   // Этот метод собирает массив всех полей в форме,
   //  обходит их и добавляет их значения в объект.
@@ -18,10 +19,12 @@ export default class PopupWithForm extends Popup{
 
     return this._formValues;
   }
-//   getAvatarValue() {
-//     const linkNewphoto = this._inputAvatar.value;
-//     return linkNewphoto
-//  }
+
+
+
+  renderLoading(text) {
+      this._submitButton.textContent = text
+  }
 
 
   setEventListeners() {

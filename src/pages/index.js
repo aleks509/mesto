@@ -83,7 +83,7 @@ const api = new Api({
           console.log(err)
       })
 
-
+// Ы
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
 profileFormValidator.enableValidation();
@@ -180,6 +180,7 @@ const profilePopup = new UserInfo({
 const popupChangeAvatar = new PopupWithForm('.popup_type_change-avatar', handleChangeAvatarForm)
 
 function handleChangeAvatarForm(inputvalue) {
+  popupChangeAvatar.renderLoading('Сохранение...')
   const avatar = inputvalue.avatar
   console.log(inputvalue.avatar)
   profilePopup.setNewUserInfo({ avatar })
@@ -189,21 +190,25 @@ function handleChangeAvatarForm(inputvalue) {
 
 // функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
 function handleFormSubmit(inputValuesObject) {
+
   const name = inputValuesObject.place
   const link = inputValuesObject.link
   const newPhotoElement = createCard({ name, link })
   cardList.prependItem(newPhotoElement);
   api.addNewCard(name, link)
+  popupNewCard.renderLoading('Сохранение...')
 }
 
 // открытие попапа Профиль и подстановка  данных
 function hadleOpenInfoProfile() {
   profileFormValidator.disableSubmitButton();
+
   const profileUserInfo = profilePopup.getUserInfo();
   // popupUserInfo.setInputValues(profileUserInfo);
   api.getUserInfo()
   .then((personalInfo) => {
     popupUserInfo.setInputValues(personalInfo);
+    popupUserInfo.renderLoading('Сохранение...')
 })
 }
 
@@ -222,6 +227,7 @@ function handleSubmitProfile(inputValuesObject) {
 // С Л У Ш А Т Е Л И
 // Profile
 editButton.addEventListener('click', () => {
+
   hadleOpenInfoProfile()
   popupUserInfo.openPopup();
 });
