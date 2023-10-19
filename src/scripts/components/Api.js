@@ -7,7 +7,7 @@ const oneError = (response) => {
 }
 export default class Api {
   constructor({ url, headers}) {
-    this._url = url, //https://mesto.nomoreparties.co/v1/cohort-77
+    this._url = url //https://mesto.nomoreparties.co/v1/cohort-77
     this._headers = headers
   }
 // /users/me
@@ -32,10 +32,7 @@ export default class Api {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        name: `${name}`,
-        about: `${about}`
-      })
+      body: JSON.stringify({ name, about })
     })
     .then((response) => oneError(response))
     }

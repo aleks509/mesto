@@ -134,7 +134,7 @@ const popupDeleteCard = new PopupDelete('.popup_type_delete-photo', handleSubmit
 
 //
 function handleSubmitPopupDelete(cardId) {
-  console.log(cardId)
+  // console.log(cardId)
   api.deleteCard(cardId)
     .then(() => {
       // cardNewElement.remove()
@@ -159,11 +159,11 @@ function handleSubmitPopupDelete(cardId) {
 // }
 
 // попап viewPhoto,
-const PopupViewPhoto = new PopupWithImage('.popup_type_view-photo');
+const popupViewPhoto = new PopupWithImage('.popup_type_view-photo');
 
 // Ф вставки данных, которую надо передать как ссылку в класс Card
 function handleImageClick(img, title) {
-  PopupViewPhoto.openPopup(img, title);
+  popupViewPhoto.openPopup(img, title);
 }
 // Ф О Р М Ы
 
@@ -182,22 +182,37 @@ const popupChangeAvatar = new PopupWithForm('.popup_type_change-avatar', handleC
 function handleChangeAvatarForm(inputvalue) {
   popupChangeAvatar.renderLoading('Сохранение...')
   const avatar = inputvalue.avatar
-  console.log(inputvalue.avatar)
-  profilePopup.setNewUserInfo({ avatar })
-  api.changeAvatar(avatar)
-  popupChangeAvatar.closePopup();
+    api.changeAvatar(avatar)
+    .then((resp) =>{
+        profilePopup.setNewUserInfo({ avatar })
+      })
+    .catch((err) => {
+        console.log('Ошибка при загрузке фото:', err)
+      })
+    .finally(() => {
+        popupChangeAvatar.renderLoading('Сохранить')
+      })
+    popupChangeAvatar.closePopup();
 }
 
 // функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
 function handleFormSubmit(inputValuesObject) {
-
+  popupNewCard.renderLoading('Сохранение...')
   const name = inputValuesObject.place
   const link = inputValuesObject.link
-  const newPhotoElement = createCard({ name, link })
-  cardList.prependItem(newPhotoElement);
   api.addNewCard(name, link)
-  popupNewCard.renderLoading('Сохранение...')
-}
+    .then((resp) => {
+      const newPhotoElement = createCard({ name, link })
+      cardList.prependItem(newPhotoElement);
+    })
+    .catch((err) => {
+      console.log('Ошибка при загрузке новой карточки:', err)
+    })
+    .finally(() => {
+      popupChangeAvatar.renderLoading('Сохранить')
+    })
+  }
+
 
 // открытие попапа Профиль и подстановка  данных
 function hadleOpenInfoProfile() {
@@ -210,14 +225,29 @@ function hadleOpenInfoProfile() {
     popupUserInfo.setInputValues(personalInfo);
     popupUserInfo.renderLoading('Сохранение...')
 })
+  .catch((err) => {
+  console.log('Ошибка при загрузке:', err)
+})
+  .finally(() => {
+  popupChangeAvatar.renderLoading('Сохранить')
+})
 }
 
 // функция сабмита Изменения Профиля
 function handleSubmitProfile(inputValuesObject) {
   const name = inputValuesObject.name
   const about = inputValuesObject.about
-  profilePopup.setNewUserInfo({name, about})
+  // const avatar = inputValuesObject.avatar
   api.editProfile(name, about)
+    .then((profiledata) => {
+      profilePopup.setNewUserInfo(profiledata)
+    })
+    .catch((err) => {
+      console.log('Ошибка при загрузке данных:', err)
+    })
+      .finally(() => {
+      popupChangeAvatar.renderLoading('Сохранить')
+    })
 }
 
 
@@ -240,13 +270,13 @@ addButton.addEventListener('click', () => {
 
 avatarChangeButton.addEventListener('click', () => {
   popupChangeAvatar.openPopup();
-  // changeAvatarFormValidator.disableSubmitButton();
+  changeAvatarFormValidator.disableSubmitButton();
 });
 
 
 popupNewCard.setEventListeners();
 
-PopupViewPhoto.setEventListeners();
+popupViewPhoto.setEventListeners();
 popupChangeAvatar.setEventListeners();
 
 popupDeleteCard.setEventListeners()

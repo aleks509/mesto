@@ -1,5 +1,4 @@
 export default class Card {
-  // параметры коструктора - обект и селектор разметки и ссылка на функцию открытия openView(img, title)
   constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handleOpenPopupDeleteCard, { likeCard , unlikeCard }) {
     this._name = name;
     this._link = link;
@@ -13,7 +12,7 @@ export default class Card {
     this._likeCard = likeCard;
     this._unlikeCard = unlikeCard
   }
-// приватный метод, который заеберет разметку из HTML, клонирует
+//  заеберет разметку из HTML, клонирует
 //  и вернет DOM element
 
   _getTemplate() {
@@ -33,7 +32,7 @@ export default class Card {
       this._likeMeter = this._element.querySelector('.element__likemeter');
       this._trash = this._element.querySelector('.element__trash')
       this._setEventListeners();
-
+      this._likeMeter.textContent = this._likes.length;
       this._titleElement.textContent = this._name;
       this._imageElement.src = this._link;
       this._imageElement.alt = this._name;
@@ -44,7 +43,7 @@ export default class Card {
   _handleLikeClick() {
       this._buttonLike.classList.toggle('element__like_active')
       this._likeActiveChecking()
-      // this._likeMeter.textContent = this._likes.length;
+
     }
 
   _likeActiveChecking() {

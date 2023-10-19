@@ -28,7 +28,7 @@ export default class Popup {
       this.closePopup();
    })
 
-    this._popup.addEventListener('click', (evt) => {
+    this._popup.addEventListener('mousedown', (evt) => {
       if (evt.target === evt.currentTarget) {
         this.closePopup(evt.target)
     }
@@ -39,7 +39,7 @@ export default class Popup {
 
 
 
-// Создайте класс Popup, который отвечает за открытие и закрытие попапа.
+//  класс Popup,  отвечает за открытие и закрытие попапа.
 // Этот класс:
 // Принимает в конструктор единственный параметр — селектор попапа.
 
@@ -47,20 +47,3 @@ export default class Popup {
 // Содержит приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc.
 // Содержит публичный метод setEventListeners, который добавляет слушатель клика иконке закрытия попапа.
 // Модальное окно также закрывается при клике на затемнённую область вокруг формы.
-
-
-
-
-// }
-// // // универсальная Ф закрытия попапов
-// function closePopup(popup) {
-//   popup.classList.remove('popup_opened')
-//   document.removeEventListener('keydown', handleEscClick);
-// }
-
-// function handleOverlayClick(evt) {
-//   if (evt.target === evt.currentTarget) {
-//     closePopup(evt.target)
-// }
-// };
-// //закрытие Esc
