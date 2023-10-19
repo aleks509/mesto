@@ -1,5 +1,5 @@
 export default class Card {
-  constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handleOpenPopupDeleteCard, { likeCard , unlikeCard }) {
+  constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -25,33 +25,33 @@ export default class Card {
       // запишем разметку в приватоное поле _element
       // у др элеметнов будет к ней доступ
       this._element = this._getTemplate();
-
       this._imageElement = this._element.querySelector('.element__image');
       this._buttonLike = this._element.querySelector('.element__like');
       this._titleElement = this._element.querySelector('.element__title');
       this._likeMeter = this._element.querySelector('.element__likemeter');
       this._trash = this._element.querySelector('.element__trash')
       this._setEventListeners();
-      this._likeMeter.textContent = this._likes.length;
+      // this._likeMeter.textContent = this._likes.length
       this._titleElement.textContent = this._name;
       this._imageElement.src = this._link;
       this._imageElement.alt = this._name;
       this.idMatching()
+
       return this._element;
   }
+
 
   _handleLikeClick() {
       this._buttonLike.classList.toggle('element__like_active')
       this._likeActiveChecking()
-
+      this._likeMeter.textContent = this._likes.length;
     }
 
   _likeActiveChecking() {
       if (this._buttonLike.classList.contains('element__like_active')) {
-        this._likeCard(this._cardId)
+        this._likeCard(this)
       } else {
-        this._unlikeCard(this._cardId)
-        // this._likeMeter.textContent = this._likes.length - 1
+        this._unlikeCard(this)
       }
   }
   likeMeter(length) {
@@ -62,14 +62,13 @@ export default class Card {
   idMatching() {
     if (this._myId === this._ownerId) {
       this._trash.addEventListener('click', () => {
-        this.removeCard()
+        this.handleOpenPopupDeleteCard(this)
       });
     } else {
       this._trash.remove();
     }
   }
   removeCard() {
-    this.handleOpenPopupDeleteCard(this._cardId)
     this._element.remove();
     this._element = null;
   }
@@ -78,9 +77,7 @@ export default class Card {
     this._buttonLike.addEventListener('click', () => {
       this._handleLikeClick();
     });
-    // this._element.querySelector('.element__trash').addEventListener('click', () => {
-    //   this._handlePopupDeleteCard()
-    // });
+
     this._imageElement.addEventListener('click', () => {
       this._handleImageClick(this._link, this._name)
      });
