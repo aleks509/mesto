@@ -91,8 +91,8 @@ profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(configForm, formAddCard);
 cardFormValidator.enableValidation();
 
-// const changeAvatarFormValidator = new FormValidator(configForm, formNewAva)
-// changeAvatarFormValidator.enableValidation()
+const changeAvatarFormValidator = new FormValidator(configForm, formNewAva)
+changeAvatarFormValidator.enableValidation()
 
 // ф создания карточки, которую вызываем при создании экз класса
 function createCard({ name, link, likes, myId, ownerId, cardId }) {
