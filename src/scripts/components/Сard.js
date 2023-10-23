@@ -1,9 +1,8 @@
 export default class Card {
-  constructor ({ name, link, likes, myId, ownerId, cardId }, templateSelector, handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard) {
+  constructor ({ name, link, likes,  ownerId, cardId }, templateSelector, handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard, myId) {
     this._name = name;
     this._link = link;
     this._likes = likes;
-    this._myId = myId;
     this._ownerId = ownerId;
     this._cardId = cardId;
     this._templateSelector = templateSelector;
@@ -11,6 +10,7 @@ export default class Card {
     this.handleOpenPopupDeleteCard = handleOpenPopupDeleteCard;
     this._likeCard = likeCard;
     this._unlikeCard = unlikeCard
+    this._myId = myId;
   }
 //  заеберет разметку из HTML, клонирует
 //  и вернет DOM element
@@ -31,7 +31,7 @@ export default class Card {
       this._likeMeter = this._element.querySelector('.element__likemeter');
       this._trash = this._element.querySelector('.element__trash')
       this._setEventListeners();
-      // this._likeMeter.textContent = this._likes.length
+      this._likeMeter.textContent = this._likes.length
       this._titleElement.textContent = this._name;
       this._imageElement.src = this._link;
       this._imageElement.alt = this._name;

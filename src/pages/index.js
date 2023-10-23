@@ -32,6 +32,9 @@ const api = new Api({
     'Content-Type': 'application/json'
 }
 })
+
+let myId
+
 // myId 09519f0944205716a8ba06bd
   Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cards]) => {
@@ -39,7 +42,7 @@ const api = new Api({
     const name = userInfo.name
     const about = userInfo.about
     const avatar = userInfo.avatar
-    const myId = userInfo._id
+    myId = userInfo._id
     // console.log(myId + ` myID`)
     profilePopup.setNewUserInfo({ name, about, avatar })
     // const newCardsArray = cards
@@ -48,23 +51,22 @@ const api = new Api({
        // console.log(ownerId + ` ownerID`)
       const cardId = card._id
       // console.log(cardId + ` cardID`)
-      const newCard = new Card ({
+      const newCard = createCard ({
         name: card.name,
         link: card.link,
         likes: card.likes,
-        myId: myId,
         ownerId: ownerId,
         cardId: cardId
       },
-      '.element-template', handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard)
-      cardList.prependItem(newCard.createCard())
+      '.element-template', handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard, myId)
+      cardList.prependItem(newCard)
       })
    })
    .catch((err) => {
           console.log(err)
       })
 
-// Ы
+//
 // создаем экз класса FormValidator для каждой проверяемой формы и вызвать метод EnableValidator
 const profileFormValidator = new FormValidator(configForm, formProfile);
 profileFormValidator.enableValidation();
@@ -75,17 +77,11 @@ cardFormValidator.enableValidation();
 const changeAvatarFormValidator = new FormValidator(configForm, formNewAva)
 changeAvatarFormValidator.enableValidation()
 
+
 // ф создания карточки, которую вызываем при создании экз класса
-function createCard({ name, link, likes, myId, ownerId, cardId }) {
+function createCard(item) {
   // тут создаете карточку и возвращаете ее
-  const cardElement = new Card ({
-    name: name,
-    link: link,
-    likes: likes,
-    myId: myId,
-    ownerId: ownerId,
-    cardId: cardId,
-    }, '.element-template', handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard)
+  const cardElement = new Card (item,  '.element-template', handleImageClick, handleOpenPopupDeleteCard, likeCard, unlikeCard, myId)
   return cardElement.createCard();
 }
 
@@ -126,6 +122,7 @@ function handleSubmitPopupDelete(card) {
 }
 
 function likeCard(card) {
+  // console.log(card)
   api.likeCard(card._cardId)
   .then((response) => {
      const length = response.likes.length
@@ -192,8 +189,14 @@ function handleFormSubmit(inputValuesObject) {
   const link = inputValuesObject.link
   api.addNewCard(name, link)
     .then((item) => {
-      // console.log(name, link)
-      const newPhotoElement = createCard({name, link})
+      console.log(item)
+      const newPhotoElement = createCard({
+        name: item.name,
+        link: item.link,
+        likes: item.likes,
+        cardId: item._id,
+        ownerId: item.owner._id
+      })
       cardList.prependItem(newPhotoElement);
     })
     .catch((err) => {
