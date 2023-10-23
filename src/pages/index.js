@@ -172,6 +172,7 @@ function handleChangeAvatarForm(inputvalue) {
     api.changeAvatar(avatar)
     .then((resp) =>{
         profilePopup.setNewUserInfo({ avatar })
+        popupChangeAvatar.closePopup();
       })
     .catch((err) => {
         console.log('Ошибка при загрузке фото:', err)
@@ -179,7 +180,7 @@ function handleChangeAvatarForm(inputvalue) {
     .finally(() => {
         popupChangeAvatar.renderLoading('Сохранить')
       })
-    popupChangeAvatar.closePopup();
+
 }
 
 // функция сабмита Формы НОВАЯ КАРТОЧКА, принимает объект с данными инпутов формы
@@ -213,11 +214,11 @@ function hadleOpenInfoProfile() {
   profileFormValidator.disableSubmitButton();
 
   const profileUserInfo = profilePopup.getUserInfo();
-  // popupUserInfo.setInputValues(profileUserInfo);
+  popupUserInfo.renderLoading('Сохранение...')
   api.getUserInfo()
   .then((personalInfo) => {
     popupUserInfo.setInputValues(personalInfo);
-    popupUserInfo.renderLoading('Сохранение...')
+
 })
   .catch((err) => {
   console.log('Ошибка при загрузке:', err)
@@ -231,16 +232,17 @@ function hadleOpenInfoProfile() {
 function handleSubmitProfile(inputValuesObject) {
   const name = inputValuesObject.name
   const about = inputValuesObject.about
-  // const avatar = inputValuesObject.avatar
+  popupChangeAvatar.renderLoading('Сохранить')
   api.editProfile(name, about)
     .then((profiledata) => {
       profilePopup.setNewUserInfo(profiledata)
+
     })
     .catch((err) => {
       console.log('Ошибка при загрузке данных:', err)
     })
       .finally(() => {
-      popupChangeAvatar.renderLoading('Сохранить')
+        popupChangeAvatar.renderLoading('Сохранить')
     })
 }
 
