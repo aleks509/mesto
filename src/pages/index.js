@@ -44,9 +44,9 @@ let myId
     const avatar = userInfo.avatar
     myId = userInfo._id
     // console.log(myId + ` myID`)
-    profilePopup.setNewUserInfo({ name, about, avatar })
+    userInfoPopup.setNewUserInfo({ name, about, avatar })
     // const newCardsArray = cards
-    cards.forEach(card => {
+    cards.reverse().forEach(card => {
       const ownerId = card.owner._id
        // console.log(ownerId + ` ownerID`)
       const cardId = card._id
@@ -99,10 +99,10 @@ const cardList = new Section({
 cardList.renderItems();
 
 // открытие попапа
-function handleOpenPopupDeleteCard(card) {
+function handleOpenPopupDeleteCard(item) {
 
   popupDeleteCard.openPopup()
-  popupDeleteCard.setIdCard(card)
+  popupDeleteCard.setIdCard(item)
 }
 
 // попап deleteCard
@@ -110,10 +110,10 @@ const popupDeleteCard = new PopupDelete('.popup_type_delete-photo', handleSubmit
 
 
 //
-function handleSubmitPopupDelete(card) {
-  api.deleteCard(card._cardId)
+function handleSubmitPopupDelete(item) {
+  api.deleteCard(item._cardId)
     .then(() => {
-      card.removeCard()
+      item.removeCard()
       popupDeleteCard.closePopup()
     })
     .catch((err) => {
@@ -121,24 +121,24 @@ function handleSubmitPopupDelete(card) {
     })
 }
 
-function likeCard(card) {
+function likeCard(item) {
   // console.log(card)
-  api.likeCard(card._cardId)
+  api.likeCard(item._cardId)
   .then((response) => {
      const length = response.likes.length
-        card.likeMeter(length)
+        item.likeMeter(length)
       })
   .catch((err) => {
         console.log('Ошибка при попытке лайкнуть', err)
       })
 }
-function unlikeCard(card) {
+function unlikeCard(item) {
   //
-    api.unlikeCard(card._cardId)
+    api.unlikeCard(item._cardId)
     .then((response) => {
       // console.log(response.likes.length)
      const length = response.likes.length
-    card.likeMeter(length)
+     item.likeMeter(length)
       })
     .catch((err) => {
        console.log('Ошибка при попытке дизлайкнуть', err)
@@ -159,7 +159,7 @@ const popupNewCard = new PopupWithForm ('.popup_type_new-element', handleFormSub
 // попап открытого Профиля
 const popupUserInfo = new PopupWithForm ('.popup_type_about', handleSubmitProfile)
 // данные для Профиля
-const profilePopup = new UserInfo({
+const userInfoPopup = new UserInfo({
   nameElement: '.profile__title',
   aboutElement: '.profile__subtitle'
 })
@@ -171,7 +171,7 @@ function handleChangeAvatarForm(inputvalue) {
   const avatar = inputvalue.avatar
     api.changeAvatar(avatar)
     .then((resp) =>{
-        profilePopup.setNewUserInfo({ avatar })
+        userInfoPopup.setNewUserInfo({ avatar })
         popupChangeAvatar.closePopup();
       })
     .catch((err) => {
@@ -198,6 +198,7 @@ function handleFormSubmit(inputValuesObject) {
         cardId: item._id,
         ownerId: item.owner._id
       })
+      popupNewCard.closePopup();
       cardList.prependItem(newPhotoElement);
     })
     .catch((err) => {
@@ -212,37 +213,27 @@ function handleFormSubmit(inputValuesObject) {
 // открытие попапа Профиль и подстановка  данных
 function hadleOpenInfoProfile() {
   profileFormValidator.disableSubmitButton();
-
-  const profileUserInfo = profilePopup.getUserInfo();
-  popupUserInfo.renderLoading('Сохранение...')
-  api.getUserInfo()
-  .then((personalInfo) => {
-    popupUserInfo.setInputValues(personalInfo);
-
-})
-  .catch((err) => {
-  console.log('Ошибка при загрузке:', err)
-})
-  .finally(() => {
-  popupChangeAvatar.renderLoading('Сохранить')
-})
+  const profileUserInfo = userInfoPopup.getUserInfo();
+  popupUserInfo.setInputValues(profileUserInfo)
 }
 
 // функция сабмита Изменения Профиля
 function handleSubmitProfile(inputValuesObject) {
+
   const name = inputValuesObject.name
   const about = inputValuesObject.about
-  popupChangeAvatar.renderLoading('Сохранить')
+  popupUserInfo.renderLoading('Сохранение...')
   api.editProfile(name, about)
     .then((profiledata) => {
-      profilePopup.setNewUserInfo(profiledata)
+      userInfoPopup.setNewUserInfo(profiledata)
+      popupUserInfo.closePopup();
 
     })
     .catch((err) => {
       console.log('Ошибка при загрузке данных:', err)
     })
       .finally(() => {
-        popupChangeAvatar.renderLoading('Сохранить')
+        popupUserInfo.renderLoading('Сохранить')
     })
 }
 
@@ -276,9 +267,4 @@ popupViewPhoto.setEventListeners();
 popupChangeAvatar.setEventListeners();
 
 popupDeleteCard.setEventListeners()
-// инициализация формы
-// const formRenderer = new Section({
-//   data: []
-// },'.elements');
-// const formElement = popupNewCard.generate()
-// formRenderer.addItem(formElement);
+

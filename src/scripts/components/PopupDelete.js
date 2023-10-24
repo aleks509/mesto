@@ -14,26 +14,13 @@ export default class PopupDelete extends Popup{
   setEventListeners() {
       super.setEventListeners()
       this._buttonConfirm.addEventListener('click', () => {
-        this._handleSubmitPopupDelete(this._card)
-        this.closePopup();
+        this._handleSubmitPopupDelete(this._item)
       })
     }
 
-  setIdCard(card) {
-    this._card = card
+  setIdCard(item) {
+    this._item = item
   }
 
 }
 
-
-
-
-
-// handleCardRemove(evt) {
-//     evt.preventDefault();
-//     this._element.remove();
-//     this._element = null;
-// }
-
-//
-//

@@ -36,7 +36,9 @@ export default class Card {
       this._imageElement.src = this._link;
       this._imageElement.alt = this._name;
       this.idMatching()
-
+        if (this._likes.some(item => item._id === this._myId)) {
+          this._buttonLike.classList.toggle('element__like_active')
+        }
       return this._element;
   }
 
@@ -44,7 +46,7 @@ export default class Card {
   _handleLikeClick() {
       this._buttonLike.classList.toggle('element__like_active')
       this._likeActiveChecking()
-      this._likeMeter.textContent = this._likes.length;
+
     }
 
   _likeActiveChecking() {

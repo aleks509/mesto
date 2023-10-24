@@ -32,7 +32,7 @@ export default class PopupWithForm extends Popup{
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues())
-      this.closePopup();
+      // this.closePopup();
     });
   }
 // заменили функцию(вставки инфы из профиля в поля формы) на метод класса
