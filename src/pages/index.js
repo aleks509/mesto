@@ -37,14 +37,14 @@ let myId
 
 // myId 09519f0944205716a8ba06bd
   Promise.all([api.getUserInfo(), api.getCards()])
-  .then(([userInfo, cards]) => {
-    console.log([userInfo, cards]);
-    const name = userInfo.name
-    const about = userInfo.about
-    const avatar = userInfo.avatar
-    myId = userInfo._id
+  .then(([userData, cards]) => {
+    console.log([userData, cards]);
+    const name = userData.name
+    const about = userData.about
+    const avatar = userData.avatar
+    myId = userData._id
     // console.log(myId + ` myID`)
-    userInfoPopup.setNewUserInfo({ name, about, avatar })
+    userInfo.setNewUserInfo({ name, about, avatar })
     // const newCardsArray = cards
     cards.reverse().forEach(card => {
       const ownerId = card.owner._id
@@ -102,7 +102,7 @@ cardList.renderItems();
 function handleOpenPopupDeleteCard(item) {
 
   popupDeleteCard.openPopup()
-  popupDeleteCard.setIdCard(item)
+  popupDeleteCard.setIdItem(item)
 }
 
 // попап deleteCard
@@ -159,7 +159,7 @@ const popupNewCard = new PopupWithForm ('.popup_type_new-element', handleFormSub
 // попап открытого Профиля
 const popupUserInfo = new PopupWithForm ('.popup_type_about', handleSubmitProfile)
 // данные для Профиля
-const userInfoPopup = new UserInfo({
+const userInfo = new UserInfo({
   nameElement: '.profile__title',
   aboutElement: '.profile__subtitle'
 })
@@ -171,7 +171,7 @@ function handleChangeAvatarForm(inputvalue) {
   const avatar = inputvalue.avatar
     api.changeAvatar(avatar)
     .then((resp) =>{
-        userInfoPopup.setNewUserInfo({ avatar })
+        userInfo.setNewUserInfo({ avatar })
         popupChangeAvatar.closePopup();
       })
     .catch((err) => {
@@ -213,7 +213,7 @@ function handleFormSubmit(inputValuesObject) {
 // открытие попапа Профиль и подстановка  данных
 function hadleOpenInfoProfile() {
   profileFormValidator.disableSubmitButton();
-  const profileUserInfo = userInfoPopup.getUserInfo();
+  const profileUserInfo = userInfo.getUserInfo();
   popupUserInfo.setInputValues(profileUserInfo)
 }
 
@@ -225,7 +225,7 @@ function handleSubmitProfile(inputValuesObject) {
   popupUserInfo.renderLoading('Сохранение...')
   api.editProfile(name, about)
     .then((profiledata) => {
-      userInfoPopup.setNewUserInfo(profiledata)
+      userInfo.setNewUserInfo(profiledata)
       popupUserInfo.closePopup();
 
     })

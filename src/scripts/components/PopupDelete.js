@@ -18,7 +18,7 @@ export default class PopupDelete extends Popup{
       })
     }
 
-  setIdCard(item) {
+  setIdItem(item) {
     this._item = item
   }
 
