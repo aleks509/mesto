@@ -43,40 +43,19 @@ export default class Card {
   }
 
 
-
-  // _handleLikeClick() {
-  //     this._likeActiveChecking()
-
-  //   }
-
-  // _likeActiveChecking() {
-  //     if (this._likes.find(item => item._id === this._myId)) {
-  //       this._unlikeCard(this)
-  //     } else {
-  //       this._likeCard(this)
-  //     }
-  // }
-  // likeMeter(length) {
-  //   this._likeMeter.textContent = length
-  //   this._buttonLike.classList.toggle('element__like_active')
-  // }
-
   _handleLikeClick() {
-    this._buttonLike.classList.toggle('element__like_active')
       this._likeActiveChecking()
     }
 
   _likeActiveChecking() {
     if (this._buttonLike.classList.contains('element__like_active')) {
-
-      this._likeCard(this)
-
-    } else {
-
       this._unlikeCard(this)
+    } else {
+      this._likeCard(this)
       }
   }
   likeMeter(length) {
+    this._buttonLike.classList.toggle('element__like_active')
     this._likeMeter.textContent = length
   }
 
